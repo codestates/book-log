@@ -5,15 +5,15 @@ const config = {
   development: {
     host: 'localhost',
     user: 'root',
-    password: process.env.DATABASE_SPRINT_PASSWORD,
-    database: 'cmarket'
+    password: process.env.DATABASE_PASSWORD,
+    database: 'book_log',
   },
-  test: {
+  production: {
     host: 'localhost',
     user: 'root',
-    password: process.env.DATABASE_SPRINT_PASSWORD,
-    database: 'cmarket_test'
-  }
+    password: process.env.DATABASE_PASSWORD,
+    database: 'book_log',
+  },
 };
 
 module.exports = config;
