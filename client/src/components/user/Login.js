@@ -43,9 +43,7 @@ export default function Login() {
           <div className="signupBox">
             <Link to="/signup"> 회원가입</Link>
           </div>
-          <div className="signupBox">
-            <Link to="/googlesignup"> Google이메일로 회원가입</Link>
-          </div>
+          <div className="signupBox">Google이메일로 회원가입</div>
         </div>
       </center>
     </div>
