@@ -9,10 +9,11 @@ const config = {
     database: 'book_log',
   },
   production: {
-    host: 'localhost',
-    user: 'root',
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASSWORD,
     database: 'book_log',
+    port: process.env.DATABASE_PORT,
   },
 };
 
