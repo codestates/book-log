@@ -14,10 +14,16 @@ module.exports = {
     });
   },
   sendAccessToken: (res, accessToken) => {
-    res.json({ data: { accessToken }, message: 'ok' });
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+    })
+    res.json({ message: 'ok' });
   },
   resendAccessToken: (res, accessToken, data) => {
-    res.json({ data: { accessToken, userInfo: data }, message: 'ok' });
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+    })
+    res.json({ message: 'ok' });
   },
   isAuthorized: (req) => {
     const authorization = req.headers['authorization'];
