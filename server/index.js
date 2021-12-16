@@ -4,7 +4,7 @@ const https = require('https');
 const router = require('./routes');
 require('dotenv').config();
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 80;
 
 app.get('/', (req, res) => {
   res.send('HELLO WORLD');
