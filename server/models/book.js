@@ -12,5 +12,16 @@ module.exports = {
       callback(err, bookList);
     });
   },
-  reviews: () => {},
+  reviews: (userId, bookId, callback) => {
+    const queryString = `
+      SELECT b.title, b.thumbnail, r.id review_id, r.page, r.created_at, r.contents review
+      FROM review r
+      JOIN book b ON b.id = r.book_id
+      WHERE r.user_id = ? AND r.book_id = ?
+    `;
+    db.query(queryString, [userId, bookId], (err, reviewList) => {
+      if (err) throw err;
+      callback(err, reviewList);
+    });
+  },
 };
