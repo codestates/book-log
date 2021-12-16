@@ -1,3 +1,6 @@
 const { book } = require('../models/book');
 
-module.exports = {};
+module.exports = {
+  list: () => {},
+  reviews: () => {},
+};

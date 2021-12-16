@@ -1,3 +1,3 @@
 const db = require('../db');
 
-module.exports = {};
+module.exports = { list: () => {}, reviews: () => {} };
