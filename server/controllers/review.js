@@ -1,7 +1,9 @@
 const { review } = require('../models');
+const { isAuthorized } = require('./tokenFunctions');
 
 module.exports = {
   new: (req, res) => {
+    const data = isAuthorized(req);
     const {
       title,
       contents,
@@ -11,7 +13,7 @@ module.exports = {
       published_at,
       publisher,
       url,
-      review: review_contents,
+      review: reviewContents,
       page,
     } = req.body;
     const bookData = {
@@ -25,12 +27,12 @@ module.exports = {
       url,
     };
     const reviewData = {
-      review_contents,
+      reviewContents,
       page,
     };
-    review.new(bookData, reviewData, (error, result) => {
+    review.new(data.id, bookData, reviewData, (error, result) => {
       if (error) throw error;
-      res.json(result);
+      res.json({ message: 'ok', data: { ...result } });
     });
   },
   edit: () => {},
