@@ -1,11 +1,16 @@
 import MyPage from '../components/user/MyPage';
-import MainPage from '../pages/MainPage';
 import React, { useState } from 'react';
 
-export default function MainMyPage() {
+export default function MainMyPage({ isLogin }) {
   return (
     <div>
-      <MyPage />
+      {isLogin ? (
+        <div>
+          <MyPage />
+        </div>
+      ) : (
+        <div className="beforeLogin">로그인 후 사용해주세요.</div>
+      )}
     </div>
   );
 }

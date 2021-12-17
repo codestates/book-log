@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function Withdrawal() {
@@ -10,10 +10,27 @@ export default function Withdrawal() {
     setCheckPassword({ ...checkPassword, [key]: e.target.value });
   };
   const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
   const requestWithdrawal = () => {
     const { password } = checkPassword;
-    //만약 비밀번호가 다르면 setErrorMessage
-    //axios로 탈퇴요청 보내기
+    if (!password) {
+      setErrorMessage('비밀번호를 입력해주세요.');
+    } else {
+      axios({
+        method: 'POST',
+        url: 'http://localhost:4000/user/withdrawal',
+        data: password,
+      }).then((result) => {
+        if (result.status === 200) {
+          alert('탈퇴 완료하였습니다. Goodbye');
+          navigate('/');
+        } else if (result.status === 401) {
+          alert('비밀번호가 틀렸습니다.');
+        } else {
+          alert('서버에 문제가 있습니다. 잠시 후 시도해주세요.');
+        }
+      });
+    }
   };
   return (
     <div>
