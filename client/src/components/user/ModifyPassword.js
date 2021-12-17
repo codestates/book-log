@@ -12,15 +12,29 @@ export default function ModifyPassword() {
   const handleInputValue = (key) => (e) => {
     setModify({ ...modify, [key]: e.target.value });
   };
-
   const transferPassword = () => {
     const { password, repassword } = modify;
-    if (password.length < 8 || repassword.length < 8) {
+    if (!password || !repassword) {
+      setErrorMessage('비밀번호를 입력해주세요.');
+    } else if (password.length < 8 || repassword.length < 8) {
       setErrorMessage('비밀번호는 8자리 이상이어야합니다.');
     } else if (password !== repassword) {
       setErrorMessage('비밀번호가 일치 하지 않습니다.');
+    } else {
+      axios({
+        method: 'PATCH',
+        url: 'http://localhost:4000/user/password/new',
+        data: {
+          password,
+        },
+      }).then((result) => {
+        if (result.status === 200) {
+          alert('비밀번호를 변경하였습니다.');
+        } else {
+          alert('서버에 문제가 있습니다. 잠시 후 시도해주세요.');
+        }
+      });
     }
-    //else라면, 이전비밀번호와 다른지 확인후, axios로 변경된 비밀번호 보내기
   };
   return (
     <div>

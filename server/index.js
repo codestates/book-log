@@ -9,18 +9,18 @@ require('dotenv').config();
 const PORT = process.env.PORT || 80;
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json())
+app.use(express.json());
 
 app.use(
   cors({
-    origin: ['http://book-log-client.s3-website.ap-northeast-2.amazonaws.com/'],
+    origin: 'http://localhost:3000',
     credentials: true,
-    methods: ['GET', 'POST', 'OPTIONS', 'PATCH']
+    methods: ['GET', 'POST', 'OPTIONS', 'PATCH'],
   })
 );
-app.use(cookieParser())
+app.use(cookieParser());
 
-app.use('/', router)
+app.use('/', router);
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
