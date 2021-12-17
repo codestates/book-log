@@ -68,3 +68,7 @@
   width: 30rem;
   margin: 20px;
 }
+
+.bookCard {
+  float: left;
+}

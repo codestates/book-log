@@ -35,7 +35,7 @@ export default function Login() {
             <input type="password" onChange={handleInputValue('password')} />
           </div>
           <button className="btn-login" type="submit" onClick={handleLogin}>
-            로그인
+            <Link to="/booklist">로그인</Link>
           </button>
           <div className="alert-box">{errorMessage}</div>
         </form>

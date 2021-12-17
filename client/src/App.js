@@ -8,9 +8,12 @@ import ChkPassPage from './pages/ChkPassPage';
 import WithdrawalPage from './pages/WithdrawalPage';
 import MdfPassPage from './pages/MdfPassPage';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import BookListPage from './pages/BookListPage';
+import ReviewListPage from './pages/ReviewListPage';
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
+
   return (
     <div className="App">
       <Router>
@@ -23,6 +26,12 @@ function App() {
           <Route exact path="/checkpassword" element={<ChkPassPage />}></Route>
           <Route exact path="/withdrawal" element={<WithdrawalPage />}></Route>
           <Route exact path="/modify" element={<MdfPassPage />}></Route>
+          <Route exact path="/booklist" element={<BookListPage />}></Route>
+          <Route
+            exact
+            path="/booklist/reviewlist"
+            element={<ReviewListPage />}
+          ></Route>
         </Routes>
       </Router>
     </div>
