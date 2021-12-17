@@ -4,6 +4,9 @@ const { isAuthorized } = require('./tokenFunctions');
 module.exports = {
   new: (req, res) => {
     const data = isAuthorized(req);
+    if (!data) {
+      res.status(500).json({ message: 'Invalid User' });
+    }
     const {
       title,
       contents,
