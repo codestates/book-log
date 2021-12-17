@@ -1,3 +1,7 @@
 const db = require('../db');
 
-module.exports = {};
+module.exports = {
+  new: () => {},
+  edit: () => {},
+  remove: () => {},
+};
