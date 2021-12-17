@@ -9,7 +9,8 @@ module.exports = {
   generateAccessToken: (data) => {
     return sign(data, process.env.ACCESS_SECRET, { expiresIn: '1d' });
   },
-  sendAccessToken: (res, accessToken) => {
+  sendAccessToken: (res, data, accessToken) => {
+    console.log(data)
     res.cookie('accessToken', accessToken, {
       // domain: 'localhost', 
       path: '/',
@@ -18,7 +19,7 @@ module.exports = {
       // secure: true,
       httpOnly: true,
     })
-    res.json({ message: 'ok' });
+    res.json({ data, message: 'ok' });
   },
   isAuthorized: (req) => {
     const accessToken = req.cookies.accessToken;

@@ -19,7 +19,7 @@ module.exports = {
         if (result.length !== 0) {
             const data = { ...result[0] }
             const accessToken = generateAccessToken(data);
-            sendAccessToken(res, accessToken);
+            sendAccessToken(res, data, accessToken);
         }
         else {
             res.status(401).json({ message: 'Invalid user or Wrong password'})

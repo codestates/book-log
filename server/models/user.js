@@ -3,7 +3,7 @@ const db = require('../db');
 module.exports = {
   login: (email, password, callback) => {
     const queryString = `
-            SELECT id, username, email FROM user
+            SELECT id AS user_id, username, email FROM user
             WHERE email = "${email}" AND password = "${password}"
         `;
     db.query(queryString, (error, result) => {
