@@ -10,7 +10,6 @@ module.exports = {
     return sign(data, process.env.ACCESS_SECRET, { expiresIn: '1d' });
   },
   sendAccessToken: (res, data, accessToken) => {
-    console.log(data)
     res.cookie('accessToken', accessToken, {
       // domain: 'localhost', 
       path: '/',
