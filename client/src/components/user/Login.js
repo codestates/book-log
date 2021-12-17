@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;
 
-export default function Login() {
+export default function Login({ handleLogin, handleUsername }) {
   const [loginInfo, setLoginInfo] = useState({
     email: '',
     password: '',
@@ -13,12 +13,31 @@ export default function Login() {
   const handleInputValue = (key) => (e) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
-  const handleLogin = () => {
+  const navigate = useNavigate();
+  const loginRequest = () => {
     const { email, password } = loginInfo;
     if (!email || !password) {
       setErrorMessage('이메일과 비밀번호를 입력하세요');
+    } else {
+      axios({
+        method: 'POST',
+        url: 'http://localhost:4000/user/login',
+        data: {
+          email,
+          password,
+        },
+      }).then((result) => {
+        if (result.status === 200) {
+          handleUsername('별명'); //username 받아와서 setUsername 해야할 것 같음
+          handleLogin();
+          navigate('/mypage'); //일단 mypage로 이동시켰는데, "기록된 도서페이지"로 이동 필요
+        } else if (result.status === 401) {
+          alert('이메일 또는 비밀번호가 틀렸습니다.');
+        } else {
+          alert('서버에 문제가 있습니다. 잠시 후 시도해주세요.');
+        }
+      });
     }
-    //else 라면, 로그인 요청 axios로 보내기
   };
 
   return (
@@ -34,10 +53,9 @@ export default function Login() {
             <span>비밀번호</span>
             <input type="password" onChange={handleInputValue('password')} />
           </div>
-          <button className="btn-login" type="submit" onClick={handleLogin}>
+          <button className="btn-login" type="submit" onClick={loginRequest}>
             로그인
           </button>
-          <div className="alert-box">{errorMessage}</div>
         </form>
         <div className="signupBox">
           <div className="signupBox">
@@ -45,6 +63,7 @@ export default function Login() {
           </div>
           <div className="signupBox">Google이메일로 회원가입</div>
         </div>
+        <div className="alert-box">{errorMessage}</div>
       </center>
     </div>
   );
