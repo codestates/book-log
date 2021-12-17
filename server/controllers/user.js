@@ -19,6 +19,8 @@ module.exports = {
         if (result.length !== 0) {
             const data = { ...result[0] }
             const accessToken = generateAccessToken(data);
+            data['user_id'] = data['id']
+            delete data['id']
             sendAccessToken(res, data, accessToken);
         }
         else {
