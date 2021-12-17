@@ -9,8 +9,12 @@ export default function TitleBar(props) {
   return (
     <div id="titleBar">
       <div id="barBox">
-        <button className="bar mypage"> {username}님의 마이페이지 </button>
-        <button className="bar logout"> 로그아웃 </button>
+        <button className="bar logout">
+          <Link to="/logout">로그아웃</Link>
+        </button>
+        <button className="bar mypage">
+          <Link to="/mypage">{username}님의 마이페이지</Link>
+        </button>
       </div>
     </div>
   );
