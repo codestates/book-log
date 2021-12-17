@@ -1,13 +1,17 @@
 const { user } = require('../models');
 const {
+  generateHash,
   generateAccessToken,
   sendAccessToken,
   isAuthorized,
 } = require('./tokenFunctions');
+require('dotenv').config();
+
 
 module.exports = {
   login: (req, res) => {
-    const { email, password } = req.body
+    let { email, password } = req.body
+    password = generateHash(password)
     user.login(email, password, (error, result) => {
       if (error) {
         res.status(500).json({ message: 'Server Error' });
@@ -28,7 +32,8 @@ module.exports = {
     res.status(200).json({ message: 'ok' })
   },
   signup: (req, res) => {
-    const { email, username, password } = req.body
+    let { email, username, password } = req.body
+    password = generateHash(password)
     user.signup(email, username, password, (error, result) => {
       if (error) {
         res.status(500).json({ message: 'Server Error' });
@@ -53,9 +58,10 @@ module.exports = {
   withdrawal: (req, res) => {
     const data = isAuthorized(req)
     if (data === null) {
-      return res.status(401).json({ message: 'Invalid Token'})
+      return res.status(401).json({ message: 'Invalid user'})
     }    
-    const { password } = req.body
+    let { password } = req.body
+    password = generateHash(password)
     const { email } = data
     user.withdrawal(email, password, (error, result) => {
       if (error) {
@@ -74,9 +80,10 @@ module.exports = {
     check: (req, res) => {
       const data = isAuthorized(req)
       if (data === null) {
-        return res.status(401).json({ message: 'Invalid Token'})
+        return res.status(401).json({ message: 'Invalid user'})
       }
-      const { password } = req.body
+      let { password } = req.body
+      password = generateHash(password)
       const { email } = data
       user.password.check(email, password, (error, result) => {
         if (error) {
@@ -93,9 +100,10 @@ module.exports = {
     new: (req, res) => {
       const data = isAuthorized(req)
       if (data === null) {
-        return res.status(401).json({ message: 'Invalid Token'})
+        return res.status(401).json({ message: 'Invalid user'})
       }
-      const { password } = req.body
+      let { password } = req.body
+      password = generateHash(password)
       const { email } = data
       user.password.new(email, password, (error, result) => {
         if (error) {
@@ -114,7 +122,7 @@ module.exports = {
     check: (req, res) => {
       const data = isAuthorized(req)
       if (data === null) {
-        return res.status(401).json({ message: 'Invalid Token'})
+        return res.status(401).json({ message: 'Invalid user'})
       }
       const email = req.body.email
       user.email.check(email, (error, result) => {
