@@ -53,8 +53,10 @@ export default function Login({ handleLogin, handleUsername }) {
             <span>비밀번호</span>
             <input type="password" onChange={handleInputValue('password')} />
           </div>
-          <button className="btn-login" type="submit" onClick={loginRequest}>
-            로그인
+
+          <button className="btn-login" type="submit" onClick={handleLogin}>
+            <Link to="/booklist">로그인</Link>
+
           </button>
         </form>
         <div className="signupBox">

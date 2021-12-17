@@ -69,6 +69,12 @@
   width: 30rem;
   margin: 20px;
 }
+
+
+.bookCard {
+  float: left;
+
 .alert-box {
   padding: 5em;
+
 }

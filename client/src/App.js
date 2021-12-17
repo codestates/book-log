@@ -8,9 +8,14 @@ import ChkPassPage from './pages/ChkPassPage';
 import WithdrawalPage from './pages/WithdrawalPage';
 import MdfPassPage from './pages/MdfPassPage';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import BookListPage from './pages/BookListPage';
+import ReviewListPage from './pages/ReviewListPage';
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
+
+
+
   const [username, setUsername] = useState('guest');
   const handleLogin = () => {
     setIsLogin(true);
@@ -22,6 +27,7 @@ function App() {
   const handleUsername = (input) => {
     setUsername(input);
   };
+
   return (
     <div className="App">
       <Router>
@@ -49,12 +55,13 @@ function App() {
             element={<ChkPassPage isLogin={isLogin} />}
           ></Route>
           <Route exact path="/withdrawal" element={<WithdrawalPage />}></Route>
+
+          <Route exact path="/modify"element={<MdfPassPage isLogin={isLogin} />}></Route>         
+          <Route exact path="/booklist" element={<BookListPage />}></Route>
           <Route
             exact
-            path="/modify"
-            element={<MdfPassPage isLogin={isLogin} />}
-          ></Route>
-        </Routes>
+            path="/booklist/reviewlist"
+            element={<ReviewListPage />}</Routes>
       </Router>
     </div>
   );
