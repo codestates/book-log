@@ -5,7 +5,7 @@ module.exports = {
   new: (req, res) => {
     const data = isAuthorized(req);
     if (!data) {
-      res.status(500).json({ message: 'Invalid User' });
+      res.status(401).json({ message: 'Invalid User' });
     }
     const {
       title,
@@ -34,7 +34,9 @@ module.exports = {
       page,
     };
     review.new(data.id, bookData, reviewData, (error, result) => {
-      if (error) throw error;
+      if (error) {
+        res.status(500).json({ message: 'Server Error' });
+      }
       res.json({ message: 'ok', data: { ...result } });
     });
   },
