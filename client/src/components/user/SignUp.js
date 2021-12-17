@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Modal from '../Modal';
 
 axios.defaults.withCredentials = true;
 
@@ -11,7 +12,7 @@ export default function SignUp() {
     password: '',
     repassword: '',
   });
-
+  const [usermodal, setUserModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const handleInputValue = (key) => (e) => {
     setSignUpInfo({ ...signupInfo, [key]: e.target.value });
@@ -26,6 +27,9 @@ export default function SignUp() {
       );
     } else if (repassword !== password) {
       setErrorMessage('비밀번호가 일치하지 않습니다.');
+    } else {
+      setUserModal(true);
+      //else 라면, 회원가입 요청 axios로 보내기
     }
     //else 라면, 회원가입 요청 axios로 보내기
   };
@@ -54,6 +58,7 @@ export default function SignUp() {
             SignUp
           </button>
           <div className="alert-box">{errorMessage}</div>
+          {usermodal ? <Modal username={signupInfo.username} /> : ''}
         </form>
       </center>
     </div>
