@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Modal from '../Modal';
 
@@ -17,21 +16,33 @@ export default function SignUp() {
   const handleInputValue = (key) => (e) => {
     setSignUpInfo({ ...signupInfo, [key]: e.target.value });
   };
-  const handleLogin = () => {
+  const handleSignUp = () => {
     const { email, username, password, repassword } = signupInfo;
-    if (password.length < 8 || repassword.length < 8) {
-      setErrorMessage('비밀번호는 8글자 이상이어야합니다.');
-    } else if (!email || !username || !password || !repassword) {
+    if (!email || !username || !password || !repassword) {
       setErrorMessage(
-        '이메일, 유저네임, 2번의 비밀번호 모두 다 입력해야합니다.'
+        '이메일, username, 2번의 비밀번호 모두 다 입력해야합니다.'
       );
+    } else if (password.length < 8 || repassword.length < 8) {
+      setErrorMessage('비밀번호는 8글자 이상이어야합니다.');
     } else if (repassword !== password) {
       setErrorMessage('비밀번호가 일치하지 않습니다.');
     } else {
-      setUserModal(true);
-      //else 라면, 회원가입 요청 axios로 보내기
+      axios({
+        method: 'POST',
+        url: 'http://localhost:4000/user/singup',
+        data: {
+          email,
+          username,
+          password,
+        },
+      })
+        .then((result) => {
+          if (result.status === 201) {
+            setUserModal(true);
+          }
+        })
+        .catch((err) => alert(err));
     }
-    //else 라면, 회원가입 요청 axios로 보내기
   };
   return (
     <div className="signUpContainer">
@@ -54,7 +65,7 @@ export default function SignUp() {
             <span>비밀번호 확인</span>
             <input type="password" onChange={handleInputValue('repassword')} />
           </div>
-          <button className="btn-signup" type="submit" onClick={handleLogin}>
+          <button className="btn-signup" type="submit" onClick={handleSignUp}>
             SignUp
           </button>
           <div className="alert-box">{errorMessage}</div>

@@ -3,6 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  color: #0b3961;
 }
 
 .App {
@@ -67,4 +68,7 @@
   justify-content: center;
   width: 30rem;
   margin: 20px;
+}
+.alert-box {
+  padding: 5em;
 }

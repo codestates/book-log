@@ -11,7 +11,7 @@ router.get('/:book_id/review', book.reviews);
 router.post('/new', review.new);
 
 // 감상 수정
-router.post('/edit', review.edit);
+router.patch('/edit', review.edit);
 
 // 감상 삭제
 router.post('/remove/:review_id', review.remove);
