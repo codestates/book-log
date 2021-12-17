@@ -12,9 +12,7 @@ import BookListPage from './pages/BookListPage';
 import ReviewListPage from './pages/ReviewListPage';
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false);
-
-
+  const [isLogin, setIsLogin] = useState(true);
 
   const [username, setUsername] = useState('guest');
   const handleLogin = () => {
@@ -43,7 +41,11 @@ function App() {
               />
             }
           ></Route>
-          <Route exact path="/signup" element={<SignUpPage />}></Route>
+          <Route
+            exact
+            path="/signup"
+            element={<SignUpPage handleUsername={handleUsername} />}
+          ></Route>
           <Route
             exact
             path="/mypage"
@@ -56,12 +58,18 @@ function App() {
           ></Route>
           <Route exact path="/withdrawal" element={<WithdrawalPage />}></Route>
 
-          <Route exact path="/modify"element={<MdfPassPage isLogin={isLogin} />}></Route>         
+          <Route
+            exact
+            path="/modify"
+            element={<MdfPassPage isLogin={isLogin} />}
+          ></Route>
           <Route exact path="/booklist" element={<BookListPage />}></Route>
           <Route
             exact
             path="/booklist/reviewlist"
-            element={<ReviewListPage />}</Routes>
+            element={<ReviewListPage />}
+          ></Route>
+        </Routes>
       </Router>
     </div>
   );

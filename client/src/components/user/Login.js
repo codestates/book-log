@@ -26,17 +26,22 @@ export default function Login({ handleLogin, handleUsername }) {
           email,
           password,
         },
-      }).then((result) => {
-        if (result.status === 200) {
-          handleUsername('별명'); //username 받아와서 setUsername 해야할 것 같음
-          handleLogin();
-          navigate('/mypage'); //일단 mypage로 이동시켰는데, "기록된 도서페이지"로 이동 필요
-        } else if (result.status === 401) {
-          alert('이메일 또는 비밀번호가 틀렸습니다.');
-        } else {
-          alert('서버에 문제가 있습니다. 잠시 후 시도해주세요.');
-        }
-      });
+      })
+        .then((result) => {
+          if (result.status === 200) {
+            const username = result.data.data.username;
+            handleUsername(username);
+            handleLogin();
+            navigate('/booklist');
+          }
+        })
+        .catch((err) => {
+          if (err.response.status === 400) {
+            setErrorMessage('이메일 또는 비밀번호가 틀렸습니다.');
+          } else {
+            setErrorMessage('서버에 문제가 있습니다. 잠시 후 시도해주세요.');
+          }
+        });
     }
   };
 
@@ -54,9 +59,8 @@ export default function Login({ handleLogin, handleUsername }) {
             <input type="password" onChange={handleInputValue('password')} />
           </div>
 
-          <button className="btn-login" type="submit" onClick={handleLogin}>
-            <Link to="/booklist">로그인</Link>
-
+          <button className="btn-login" type="submit" onClick={loginRequest}>
+            <span>로그인</span>
           </button>
         </form>
         <div className="signupBox">
