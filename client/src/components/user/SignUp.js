@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Modal from '../Modal';
+import { useNavigate } from 'react-router-dom';
 
 axios.defaults.withCredentials = true;
 
-export default function SignUp() {
+export default function SignUp({ handleUsername }) {
   const [signupInfo, setSignUpInfo] = useState({
     email: '',
     username: '',
@@ -16,6 +17,8 @@ export default function SignUp() {
   const handleInputValue = (key) => (e) => {
     setSignUpInfo({ ...signupInfo, [key]: e.target.value });
   };
+  const navigate = useNavigate();
+
   const handleSignUp = () => {
     const { email, username, password, repassword } = signupInfo;
     if (!email || !username || !password || !repassword) {
@@ -29,7 +32,7 @@ export default function SignUp() {
     } else {
       axios({
         method: 'POST',
-        url: 'http://localhost:4000/user/singup',
+        url: 'http://localhost:4000/user/signup',
         data: {
           email,
           username,
@@ -37,11 +40,21 @@ export default function SignUp() {
         },
       })
         .then((result) => {
-          if (result.status === 201) {
+          if (result.status === 200) {
+            console.log('@@@@@', result);
             setUserModal(true);
+            const username = result.data.data.userInfo.username;
+            handleUsername(username);
+            navigate('/booklist');
           }
         })
-        .catch((err) => alert(err));
+        .catch((err) => {
+          if (err.response.status === 409) {
+            setErrorMessage('이미 동일한 이메일이 존재합니다.');
+          } else {
+            setErrorMessage('서버에 문제가 있습니다. 잠시 후 시도해주세요.');
+          }
+        });
     }
   };
   return (

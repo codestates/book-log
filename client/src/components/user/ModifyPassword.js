@@ -27,13 +27,19 @@ export default function ModifyPassword() {
         data: {
           password,
         },
-      }).then((result) => {
-        if (result.status === 200) {
-          alert('비밀번호를 변경하였습니다.');
-        } else {
-          alert('서버에 문제가 있습니다. 잠시 후 시도해주세요.');
-        }
-      });
+      })
+        .then((result) => {
+          if (result.status === 200) {
+            alert('비밀번호를 변경하였습니다.');
+          }
+        })
+        .catch((err) => {
+          if (err.response.status === 500) {
+            setErrorMessage('서버에 문제가 있습니다. 잠시 후 시도해주세요.');
+          } else {
+            alert(err);
+          }
+        });
     }
   };
   return (

@@ -5,10 +5,11 @@ import SignUp from '../components/user/SignUp';
 
 axios.defaults.withCredentials = true;
 
-export default function SignUpPage() {
+export default function SignUpPage(props) {
+  const { handleUsername } = props;
   return (
     <div>
-      <SignUp />
+      <SignUp handleUsername={handleUsername} />
     </div>
   );
 }

@@ -26,13 +26,15 @@ export default function CheckPassword() {
         .then((result) => {
           if (result.status === 200) {
             navigate('/modify');
-          } else if (result.status === 401) {
-            alert('비밀번호가 틀렸습니다.');
-          } else {
-            alert('서버에 문제가 있습니다. 잠시 후 시도해주세요.');
           }
         })
-        .catch((err) => alert(err));
+        .catch((err) => {
+          if (err.response.status === 401) {
+            setErrorMessage('비밀번호가 틀렸습니다.');
+          } else {
+            setErrorMessage('서버에 문제가 있습니다. 잠시 후 시도해주세요.');
+          }
+        });
     }
   };
   return (
