@@ -1,7 +1,28 @@
 const { book } = require('../models');
 const { isAuthorized } = require('./tokenFunctions');
+require('dotenv').config();
+const axios = require('axios');
 
 module.exports = {
+  search: async (req, res) => {
+    const data = isAuthorized(req);
+    if (!data) {
+      res.status(401).json({ message: 'Invalid user' });
+    } else {
+      const { title } = req.query;
+      const {
+        data: { documents },
+      } = await axios.get(
+        `https://dapi.kakao.com/v3/search/book?query=${title}`,
+        {
+          headers: {
+            Authorization: `KakaoAK ${process.env.KAKAO_API_KEY}`,
+          },
+        }
+      );
+      res.json({ message: 'ok', data: documents });
+    }
+  },
   list: (req, res) => {
     const data = isAuthorized(req);
     if (!data) {
