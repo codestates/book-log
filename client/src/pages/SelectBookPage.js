@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import BookCover from '../components/book/BookCover';
+import BookInfoBox from '../components/book/BookInfoBox';
 
 const Container = styled.div`
   display: flex;
@@ -37,39 +37,6 @@ const SearchInput = styled.input`
   width: 30vw;
 `;
 
-const Cover = styled(BookCover)``;
-
-const BookBox = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const TitleInfo = styled.div`
-  display: flex;
-`;
-
-const BookInfo = styled.div`
-  width: 70%;
-  padding: 0.6rem 1.8rem;
-  padding-right: -3rem;
-`;
-
-const BookTitle = styled.div`
-  font-weight: 600;
-`;
-
-const BookAuthor = styled.div`
-  padding-left: 0.7rem;
-`;
-
-const BookPublisher = styled.div`
-  padding-left: 0.7rem;
-`;
-
-const BookPublishDate = styled.div``;
-
-const BookContents = styled.div``;
-
 const SelectBookPage = () => {
   const [bookList, setBookList] = useState([]);
   const [search, setSearch] = useState('');
@@ -96,9 +63,7 @@ const SelectBookPage = () => {
 
   const handleChange = async (e) => {
     setSearch(e.target.value);
-    // 서버에 /book/search?title=제목 으로 api 요청 전송
   };
-  console.log(bookList);
   return (
     <Container>
       <TitleContainer>
@@ -115,26 +80,7 @@ const SelectBookPage = () => {
       <BooksContainer>
         {bookList.length > 0 ? (
           bookList.map((book) => {
-            return (
-              <BookBox>
-                <Cover
-                  book={{
-                    thumbnail: book.thumbnail,
-                  }}
-                />
-                <BookInfo>
-                  <TitleInfo>
-                    <BookTitle>{book.title}</BookTitle>
-                    <BookAuthor>{book.authors[0]}</BookAuthor>
-                    <BookPublisher>{book.publisher}</BookPublisher>
-                  </TitleInfo>
-                  <BookPublishDate>
-                    {book.datetime.slice(0, 10)}
-                  </BookPublishDate>
-                  <BookContents>{book.contents}</BookContents>
-                </BookInfo>
-              </BookBox>
-            );
+            return <BookInfoBox book={book} />;
           })
         ) : (
           <div>검색 결과가 없습니다</div>
