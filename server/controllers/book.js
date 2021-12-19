@@ -13,7 +13,9 @@ module.exports = {
       const {
         data: { documents },
       } = await axios.get(
-        `https://dapi.kakao.com/v3/search/book?query=${title}`,
+        encodeURI(
+          `https://dapi.kakao.com/v3/search/book?query=${title}&target=title`
+        ),
         {
           headers: {
             Authorization: `KakaoAK ${process.env.KAKAO_API_KEY}`,
