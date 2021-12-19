@@ -10,6 +10,7 @@ import MdfPassPage from './pages/MdfPassPage';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import BookListPage from './pages/BookListPage';
 import ReviewListPage from './pages/ReviewListPage';
+import ReviewInputPage from './pages/ReviewInputPage';
 
 function App() {
   const [isLogin, setIsLogin] = useState(true);
@@ -69,6 +70,7 @@ function App() {
             path="/booklist/reviewlist"
             element={<ReviewListPage />}
           ></Route>
+          <Route path="/reviewinput" element={<ReviewInputPage />}></Route>
         </Routes>
       </Router>
     </div>
