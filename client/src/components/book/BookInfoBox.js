@@ -8,6 +8,9 @@ const Cover = styled(BookCover)``;
 const BookBox = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid black;
+  margin: 1rem 1rem;
 `;
 
 const TitleInfo = styled.div`
@@ -36,7 +39,12 @@ const BookPublishDate = styled.div``;
 
 const BookContents = styled.div``;
 
-const BookInfoBox = ({ book }) => {
+const Button = styled.button`
+  height: 2rem;
+  width: 3rem;
+`;
+
+const BookInfoBox = ({ book, clickHandler, idx }) => {
   const { thumbnail, title, authors, publisher, datetime, contents } = book;
 
   return (
@@ -53,8 +61,9 @@ const BookInfoBox = ({ book }) => {
           <BookPublisher>{publisher}</BookPublisher>
         </TitleInfo>
         <BookPublishDate>{datetime.slice(0, 10)}</BookPublishDate>
-        <BookContents>{contents}</BookContents>
+        <BookContents>{contents}...</BookContents>
       </BookInfo>
+      <Button onClick={() => clickHandler(idx)}>선택</Button>
     </BookBox>
   );
 };
