@@ -36,6 +36,12 @@ function App() {
     setBookInfo(book);
   };
 
+  const [currentBook, setCurrentBook] = useState({});
+
+  const handleCurrentbook = (book) => {
+    setCurrentBook(book);
+  };
+
   return (
     <div className="App">
       <Router>
@@ -73,11 +79,20 @@ function App() {
             path="/modify"
             element={<MdfPassPage isLogin={isLogin} />}
           ></Route>
-          <Route exact path="/booklist" element={<BookListPage />}></Route>
+          <Route
+            exact
+            path="/booklist"
+            element={
+              <BookListPage
+                handleCurrentbook={handleCurrentbook}
+                currentBook={currentBook}
+              />
+            }
+          ></Route>
           <Route
             exact
             path="/booklist/reviewlist"
-            element={<ReviewListPage />}
+            element={<ReviewListPage currentBook={currentBook} />}
           ></Route>
           <Route
             exact
