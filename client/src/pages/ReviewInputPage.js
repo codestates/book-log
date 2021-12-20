@@ -1,9 +1,7 @@
 import ReviewInput from '../components/book/ReviewInput';
 
 export default function ReviewInputPage({ bookInfo }) {
-  const title = bookInfo[1];
-  const thumbnail = bookInfo[2];
-  const contents = bookInfo[3];
+  const { title, thumbnail, contents } = bookInfo;
   return (
     <div>
       <div className="bookinfo">
@@ -11,7 +9,7 @@ export default function ReviewInputPage({ bookInfo }) {
         <div className="booktitle">{title}</div>
         <div className="bookcontents">{contents}</div>
       </div>
-      <ReviewInput />
+      <ReviewInput bookInfo={bookInfo} />
     </div>
   );
 }

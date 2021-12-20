@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import BookCover from '../components/book/BookCover';
 import axios from 'axios';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 export default function BookListPage({ handleCurrentbook, currentBook }) {
   axios.defaults.withCredentials = true;
 
@@ -31,7 +32,9 @@ export default function BookListPage({ handleCurrentbook, currentBook }) {
   console.log(bookList);
   return (
     <div className="booklistBox">
-      <button className="add-bookbtn">도서 추가</button>
+      <button className="add-bookbtn">
+        <Link to="/review/book">도서 추가</Link>
+      </button>
       <div className="book-list">
         {bookList.length !== 0
           ? bookList.map((book) => (

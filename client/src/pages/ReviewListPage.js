@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ReviewTitleList from '../components/book/ReviewTitleList';
 import ReviewList from '../components/book/ReviewList';
+import { useLocation } from 'react-router';
 
 export default function ReviewListPage({ currentBook }) {
+  const { state } = useLocation();
   axios.defaults.withCredentials = true;
 
-  const bookId = currentBook.book_id;
+  const bookId = currentBook.book_id || state.book_id;
   console.log(currentBook.book_id);
   console.log(`${process.env.REACT_APP_SERVER_URL}/book/${bookId}/review`);
 
