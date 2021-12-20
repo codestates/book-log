@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import BookInfoBox from '../components/book/BookInfoBox';
 import Modal from '../components/Modal';
@@ -77,11 +78,12 @@ const Button = styled.button`
   height: 2rem;
 `;
 
-const SelectBookPage = () => {
+const SelectBookPage = ({ handleBookInfo }) => {
   const [bookList, setBookList] = useState([]);
   const [search, setSearch] = useState('');
   const [selectedBook, setSelectedBook] = useState({});
   const [isModal, setIsModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (search !== '') {
@@ -116,6 +118,8 @@ const SelectBookPage = () => {
     if (type === 'back') {
       setIsModal(false);
     } else if (type === 'select') {
+      handleBookInfo(selectedBook);
+      navigate('/reviewinput');
     }
   };
 
