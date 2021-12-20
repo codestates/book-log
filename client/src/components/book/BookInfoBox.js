@@ -1,9 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
-import BookCover from './BookCover';
-
-const Cover = styled(BookCover)``;
+import BookInfo from './BookInfo';
 
 const BookBox = styled.div`
   display: flex;
@@ -13,31 +10,10 @@ const BookBox = styled.div`
   margin: 1rem 1rem;
 `;
 
-const TitleInfo = styled.div`
-  display: flex;
-`;
-
-const BookInfo = styled.div`
-  width: 70%;
-  padding: 0.6rem 1.8rem;
+const BookInfoContainer = styled(BookInfo)`
+  padding: 0.6rem 3rem;
   padding-right: -3rem;
 `;
-
-const BookTitle = styled.div`
-  font-weight: 600;
-`;
-
-const BookAuthor = styled.div`
-  padding-left: 0.7rem;
-`;
-
-const BookPublisher = styled.div`
-  padding-left: 0.7rem;
-`;
-
-const BookPublishDate = styled.div``;
-
-const BookContents = styled.div``;
 
 const Button = styled.button`
   height: 2rem;
@@ -45,24 +21,9 @@ const Button = styled.button`
 `;
 
 const BookInfoBox = ({ book, clickHandler, idx }) => {
-  const { thumbnail, title, authors, publisher, datetime, contents } = book;
-
   return (
     <BookBox>
-      <Cover
-        book={{
-          thumbnail: thumbnail,
-        }}
-      />
-      <BookInfo>
-        <TitleInfo>
-          <BookTitle>{title}</BookTitle>
-          <BookAuthor>{authors[0]}</BookAuthor>
-          <BookPublisher>{publisher}</BookPublisher>
-        </TitleInfo>
-        <BookPublishDate>{datetime.slice(0, 10)}</BookPublishDate>
-        <BookContents>{contents}...</BookContents>
-      </BookInfo>
+      <BookInfoContainer book={book}></BookInfoContainer>
       <Button onClick={() => clickHandler(idx)}>선택</Button>
     </BookBox>
   );
