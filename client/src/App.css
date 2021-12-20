@@ -76,3 +76,16 @@
 .alert-box {
   padding: 5em;
 }
+.review-input {
+  width: 100%;
+  height: 20em;
+}
+.page-input {
+  float: right;
+}
+.date-page {
+  margin: 2em;
+}
+.review-input-btn {
+  margin: 2em;
+}
