@@ -1,14 +1,20 @@
 const router = require('express').Router();
 const { user } = require('../controllers');
 
-// 로그인
-router.post('/login', user.login)
+// 일반 로그인
+router.post('/login/general', user.login.general)
+
+// 소셜 로그인
+router.post('/login/social', user.login.social)
 
 // 로그아웃
 router.post('/logout', user.logout)
 
-// 회원 가입
-router.post('/signup', user.signup)
+// 일반 회원 가입
+router.post('/signup/general', user.signup.general)
+
+// 소셜 회원 가입
+router.post('/signup/social', user.signup.social)
 
 // 회원 탈퇴
 router.post('/withdrawal', user.withdrawal)

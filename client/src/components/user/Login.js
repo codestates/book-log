@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+require('dotenv').config();
 
 axios.defaults.withCredentials = true;
 
@@ -21,7 +22,7 @@ export default function Login({ handleLogin, handleUsername }) {
     } else {
       axios({
         method: 'POST',
-        url: `${process.env.REACT_APP_SERVER_URL}/user/login`,
+        url: `${process.env.REACT_APP_SERVER_URL}/user/login/general`,
         data: {
           email,
           password,
@@ -45,6 +46,18 @@ export default function Login({ handleLogin, handleUsername }) {
     }
   };
 
+  const googleLoginRequest = async () => {
+    const authURL = await axios({
+      method: 'GET',
+      url: `${process.env.REACT_APP_SERVER_URL}/auth/google`,
+    })
+      .then((result) => result.data)
+      .catch((err) => {
+        console.log(err)
+      })
+    window.location.href = authURL
+  }
+
   return (
     <div className="loginContainer">
       <center>
@@ -67,7 +80,9 @@ export default function Login({ handleLogin, handleUsername }) {
           <div className="signupBox">
             <Link to="/signup"> 회원가입</Link>
           </div>
-          <div className="signupBox">Google이메일로 회원가입</div>
+          <div className="signupBox">
+            <input type="button" class="google-login-button" value="google-login" onClick={googleLoginRequest}/>
+          </div>
         </div>
         <div className="alert-box">{errorMessage}</div>
       </center>
