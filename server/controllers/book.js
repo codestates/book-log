@@ -10,6 +10,9 @@ module.exports = {
       res.status(401).json({ message: 'Invalid user' });
     } else {
       const { title } = req.query;
+      if (!title) {
+        res.status(400).json({ message: 'Bad Request' });
+      }
       const {
         data: { documents },
       } = await axios.get(
@@ -42,6 +45,9 @@ module.exports = {
   reviews: (req, res) => {
     const data = isAuthorized(req);
     const { book_id } = req.params;
+    if (!book_id) {
+      res.status(400).json({ message: 'Bad Request' });
+    }
     if (!data) {
       res.status(401).json({ message: 'Invalid user' });
     } else {

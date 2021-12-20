@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function ModifyPassword() {
@@ -7,7 +7,7 @@ export default function ModifyPassword() {
     password: '',
     repassword: '',
   });
-
+  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
   const handleInputValue = (key) => (e) => {
     setModify({ ...modify, [key]: e.target.value });
@@ -31,13 +31,16 @@ export default function ModifyPassword() {
         .then((result) => {
           if (result.status === 200) {
             alert('비밀번호를 변경하였습니다.');
+            navigate('/booklist');
           }
         })
         .catch((err) => {
-          if (err.response.status === 500) {
-            setErrorMessage('서버에 문제가 있습니다. 잠시 후 시도해주세요.');
+          if (err.response.status === 409) {
+            setErrorMessage(
+              '이전 비밀번호와 같습니다. 다른 비밀번호를 사용해주세요.'
+            );
           } else {
-            alert(err);
+            setErrorMessage('서버에 문제가 있습니다. 잠시 후 시도해주세요.');
           }
         });
     }
