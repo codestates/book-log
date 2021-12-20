@@ -21,7 +21,7 @@ export default function Login({ handleLogin, handleUsername }) {
     } else {
       axios({
         method: 'POST',
-        url: 'http://localhost:4000/user/login',
+        url: `${process.env.REACT_APP_SERVER_URL}/user/login`,
         data: {
           email,
           password,

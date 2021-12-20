@@ -21,7 +21,7 @@ export default function ReviewInput() {
     } else {
       axios({
         method: 'POST',
-        url: 'http://localhost:4000/book/new',
+        url: `${process.env.REACT_APP_SERVER_URL}/book/new`,
         data: {
           title: '',
           contents: '',

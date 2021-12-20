@@ -23,7 +23,7 @@ export default function ModifyPassword() {
     } else {
       axios({
         method: 'PATCH',
-        url: 'http://localhost:4000/user/password/new',
+        url: `${process.env.REACT_APP_SERVER_URL}/user/password/new`,
         data: {
           password,
         },
