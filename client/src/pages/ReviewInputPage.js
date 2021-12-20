@@ -1,10 +1,16 @@
 import ReviewInput from '../components/book/ReviewInput';
-import BookInfo from '../components/book/BookInfo';
 
-export default function ReviewInputPage() {
+export default function ReviewInputPage({ bookInfo }) {
+  const title = bookInfo[1];
+  const thumbnail = bookInfo[2];
+  const contents = bookInfo[3];
   return (
     <div>
-      {/* <BookInfo /> */}
+      <div className="bookinfo">
+        <img src={thumbnail} />
+        <div className="booktitle">{title}</div>
+        <div className="bookcontents">{contents}</div>
+      </div>
       <ReviewInput />
     </div>
   );

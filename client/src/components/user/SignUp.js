@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Modal from '../Modal';
 import { useNavigate } from 'react-router-dom';
-
 axios.defaults.withCredentials = true;
 
 export default function SignUp({ handleUsername }) {
@@ -41,7 +40,6 @@ export default function SignUp({ handleUsername }) {
       })
         .then((result) => {
           if (result.status === 200) {
-            console.log('@@@@@', result);
             setUserModal(true);
             const username = result.data.data.userInfo.username;
             handleUsername(username);

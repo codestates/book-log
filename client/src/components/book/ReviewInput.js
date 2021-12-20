@@ -58,6 +58,7 @@ export default function ReviewInput() {
         <input
           type="text"
           className="review-input"
+          placeholder="책을 읽고 느낌 감상을 자유롭게 남겨주세요."
           onChange={reviewInputValue('content')}
         />
         <button onClick={writeReview}>저장</button>
