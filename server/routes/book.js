@@ -10,6 +10,9 @@ router.get('/:book_id/review', book.reviews);
 // 감상 작성
 router.post('/new', review.new);
 
+// 도서 검색
+router.get('/search', book.search);
+
 // 감상 수정
 router.patch('/edit', review.edit);
 
