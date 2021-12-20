@@ -3,6 +3,25 @@ import BookCover from '../components/book/BookCover';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const BookListContainer = styled.div`
+  background-color: rgba(255, 255, 255, 0.7);
+  width: 500px;
+  height: 500px;
+  border-radius: 40px;
+  margin: auto;
+  padding: 3em;
+  font-size: 14px;
+`;
+const NoBook = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -150px;
+  margin-top: -150px;
+  font-size: 15px;
+`;
 export default function BookListPage({ handleCurrentbook, currentBook }) {
   axios.defaults.withCredentials = true;
 
@@ -31,23 +50,25 @@ export default function BookListPage({ handleCurrentbook, currentBook }) {
   }, []);
   console.log(bookList);
   return (
-    <div className="booklistBox">
+    <BookListContainer>
       <button className="add-bookbtn">
         <Link to="/review/book">도서 추가</Link>
       </button>
       <div className="book-list">
-        {bookList.length !== 0
-          ? bookList.map((book) => (
-              <BookCover
-                key={book.book_id}
-                book={book}
-                handleCurrentbook={handleCurrentbook}
-                currentBook={currentBook}
-              />
-            ))
-          : '도서를 추가해주세요.'}
+        {bookList.length !== 0 ? (
+          bookList.map((book) => (
+            <BookCover
+              key={book.book_id}
+              book={book}
+              handleCurrentbook={handleCurrentbook}
+              currentBook={currentBook}
+            />
+          ))
+        ) : (
+          <NoBook>저장한 도서가 없습니다. 도서를 추가해주세요.</NoBook>
+        )}
       </div>
       <div className="alert-box">{errorMessage}</div>
-    </div>
+    </BookListContainer>
   );
 }

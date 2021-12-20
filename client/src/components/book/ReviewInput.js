@@ -15,8 +15,13 @@ export default function ReviewInput({ bookInfo }) {
   const reviewInputValue = (key) => (e) => {
     setReviewContent({ ...reviewContent, [key]: e.target.value });
   };
+  console.log('####', bookInfo);
   const writeReview = () => {
-    if (!reviewContent.page || !reviewContent.content) {
+    let regExp = /[^0-9]/g;
+    let number = reviewContent.page.replace(regExp, '');
+    if (reviewContent.page !== number) {
+      setErrorMessage('페이지수는 숫자로만 입력해야합니다.');
+    } else if (!reviewContent.page || !reviewContent.content) {
       setErrorMessage('페이지수와 감상 내용 모두 입력해야합니다.');
     } else {
       axios({

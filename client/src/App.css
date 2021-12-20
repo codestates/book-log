@@ -1,14 +1,10 @@
 * {
   font-family: 'Roboto', sans-serif;
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
-  color: #0b3961;
 }
 
 .App {
   justify-content: center;
-  align-items: center;
   height: 100vh;
   background-color: #9fb7cd;
   background: url(./background-pic.jpg);
@@ -19,39 +15,48 @@
   height: 4rem;
   position: sticky;
   top: 0;
-  border-bottom: solid 4px #0f4c81;
   display: grid;
   place-items: center;
   display: inline-block;
-  background-color: #f8efe1;
-}
-
-.barBox {
-  display: inline-block;
-  vertical-align: middle;
+  background-color: #0b3961;
+  z-index: 1;
 }
 
 .bar {
   float: right;
-  margin: 1em;
-  background-color: #e8a188;
-  border-radius: 4px;
+  font-size: 13px;
+  z-index: -1;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 25px 25px 40px 50px;
+}
+.bar a {
+  font-family: arial;
+  font-size: 13px;
+  color: white;
+  z-index: 2;
+  position: relative;
 }
 
 .loginContainer {
-  margin-top: 20px;
   background-color: rgba(255, 255, 255, 0.7);
-  width: 30em;
-  height: 30em;
+  width: 500px;
+  height: 500px;
   border-radius: 40px;
   margin: auto;
+  padding: 1em;
+}
+.signIn {
+  margin: 5em;
 }
 
 .inputField {
   display: flex;
   flex-direction: column;
   text-align: center;
-  width: 20rem;
   flex: 1;
   justify-content: space-between;
   margin: 10px;
@@ -70,10 +75,8 @@
 .signupBox {
   display: flex;
   flex: 1;
-  align-items: center;
   justify-content: center;
-  width: 30rem;
-  margin: 20px;
+  padding-left: 1.7em;
 }
 
 .bookCard {
@@ -94,4 +97,7 @@
 }
 .review-input-btn {
   margin: 2em;
+}
+.window {
+  width: 20em;
 }
