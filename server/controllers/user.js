@@ -9,53 +9,101 @@ require('dotenv').config();
 
 
 module.exports = {
-  login: (req, res) => {
-    let { email, password } = req.body
-    password = generateHash(password)
-    user.login(email, password, (error, result) => {
-      if (error) {
-        res.status(500).json({ message: 'Server Error' });
-      } else {        
-        if (result.length !== 0) {
-            const data = { ...result[0] }
-            const accessToken = generateAccessToken(data);
-            data['user_id'] = data['id']
-            delete data['id']
-            sendAccessToken(res, data, accessToken);
+  login: {
+    general: (req, res) => {
+      let { email, password } = req.body
+      password = generateHash(password)
+      user.login.general(email, password, (error, result) => {
+        if (error) {
+          res.status(500).json({ message: 'Server Error' });
+        } else {        
+          if (result.length !== 0) {
+              const data = { ...result[0] }
+              const accessToken = generateAccessToken(data);
+              data['user_id'] = data['id']
+              delete data['id']
+              sendAccessToken(res, data, accessToken);
+          }
+          else {
+              res.status(401).json({ message: 'Invalid user or Wrong password' })
+          }
         }
-        else {
-            res.status(401).json({ message: 'Invalid user or Wrong password'})
+      });
+    },
+    social: (req, res) => {
+      let { email, social } = req.body
+      social = generateHash(social)
+      user.login.social(email, social, (error, result) => {
+        if (error) {
+          res.status(500).json({ message: 'Server Error' });
+        } else {        
+          if (result.length !== 0) {
+              const data = { ...result[0] }
+              const accessToken = generateAccessToken(data);
+              data['user_id'] = data['id']
+              delete data['id']
+              sendAccessToken(res, data, accessToken);
+          }
+          else {
+              res.status(401).json({ message: 'Invalid user or Wrong password' })
+          }
         }
-      }
-    });
+      });
+    },
   },
   logout: (req, res) => {
     res.clearCookie('accessToken')
     res.status(200).json({ message: 'ok' })
   },
-  signup: (req, res) => {
-    let { email, username, password } = req.body
-    password = generateHash(password)
-    user.signup(email, username, password, (error, result) => {
-      if (error) {
-        res.status(500).json({ message: 'Server Error' });
-      } else {
-        if (result === 'Conflict') {
-          res.status(409).json({ message: 'Conflict' });
+  signup: {
+    general: (req, res) => {
+      let { email, username, password } = req.body
+      password = generateHash(password)
+      user.signup.general(email, username, password, (error, result) => {
+        if (error) {
+          res.status(500).json({ message: 'Server Error' });
         } else {
-          const userInfo = {
-            id: result.insertId,
-            username,
-            email,
-            created_at: new Date()
+          if (result === 'Conflict') {
+            res.status(409).json({ message: 'Conflict' });
+          } else {
+            const userInfo = {
+              id: result.insertId,
+              username,
+              email,
+              created_at: new Date()
+            }
+            res.status(200).json({
+              data: { userInfo },
+              message: "Created",
+            })
           }
-          res.status(200).json({
-            data: { userInfo },
-            message: "Created",
-          })
         }
-      }
-    })
+      })
+    },
+    social: (req, res) => {
+      let { email, username, social } = req.body
+      social = generateHash(social)
+      user.signup.social(email, username, social, (error, result) => {
+        if (error) {
+          res.status(500).json({ message: 'Server Error' });
+        } else {
+          if (result === 'Conflict') {
+            res.status(409).json({ message: 'Conflict' });
+          } else {
+            const userInfo = {
+              id: result.insertId,
+              username,
+              email,
+              created_at: new Date()
+            }
+            res.status(200).json({
+              data: { userInfo },
+              message: "Created",
+            })
+          }
+        }
+      })
+    },
   },
   withdrawal: (req, res) => {
     const data = isAuthorized(req)
