@@ -10,11 +10,16 @@ import MdfPassPage from './pages/MdfPassPage';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import BookListPage from './pages/BookListPage';
 import ReviewListPage from './pages/ReviewListPage';
+import SelectBookPage from './pages/SelectBookPage';
+import ReviewInputPage from './pages/ReviewInputPage';
 
 function App() {
   const [isLogin, setIsLogin] = useState(true);
 
   const [username, setUsername] = useState('guest');
+
+  const [bookInfo, setBookInfo] = useState({});
+
   const handleLogin = () => {
     setIsLogin(true);
   };
@@ -24,6 +29,10 @@ function App() {
   };
   const handleUsername = (input) => {
     setUsername(input);
+  };
+
+  const handleBookInfo = (book) => {
+    setBookInfo(book);
   };
 
   return (
@@ -68,6 +77,15 @@ function App() {
             exact
             path="/booklist/reviewlist"
             element={<ReviewListPage />}
+          ></Route>
+          <Route
+            exact
+            path="/review/book"
+            element={<SelectBookPage handleBookInfo={handleBookInfo} />}
+          ></Route>
+          <Route
+            path="/reviewinput"
+            element={<ReviewInputPage bookInfo={bookInfo} />}
           ></Route>
         </Routes>
       </Router>
