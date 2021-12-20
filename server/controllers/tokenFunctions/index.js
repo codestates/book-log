@@ -1,17 +1,18 @@
 require('dotenv').config();
 const { sign, verify } = require('jsonwebtoken');
 const cryptoJS = require('crypto-js')
+const SALT = process.env.SALT || 'test'
 
 module.exports = {
   generateHash: (data) => {
-    return cryptoJS.SHA256(data, process.env.SALT).toString()
+    return cryptoJS.SHA256(data, SALT).toString()
   },
   generateAccessToken: (data) => {
     return sign(data, process.env.ACCESS_SECRET, { expiresIn: '1d' });
   },
   sendAccessToken: (res, data, accessToken) => {
     res.cookie('accessToken', accessToken, {
-      // domain: 'localhost', 
+      // domain: process.env.DOMAIN, 
       path: '/',
       maxAge: 24 * 60 * 60 * 1000,
       // sameSite: 'none',

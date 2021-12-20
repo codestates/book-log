@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useResolvedPath } from 'react-router-dom';
 import axios from 'axios';
+import Modal from '../Modal';
 
 export default function Withdrawal() {
   const [checkPassword, setCheckPassword] = useState({
@@ -11,6 +12,7 @@ export default function Withdrawal() {
   };
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
+  const [isModal, setModal] = useState(false);
   const requestWithdrawal = () => {
     const { password } = checkPassword;
     if (!password) {
@@ -19,12 +21,13 @@ export default function Withdrawal() {
       axios({
         method: 'POST',
         url: `${process.env.REACT_APP_SERVER_URL}/user/withdrawal`,
-        data: password,
+        data: { password },
       })
         .then((result) => {
           if (result.status === 200) {
-            alert('탈퇴 완료하였습니다. Goodbye');
-            navigate('/');
+            setModal(true);
+            // alert('탈퇴 완료하였습니다. Goodbye');
+            setTimeout(() => navigate('/'), 2000);
           }
         })
         .catch((err) => {
@@ -38,14 +41,22 @@ export default function Withdrawal() {
   };
   return (
     <div>
-      <div className="passwordField">
-        <span>비밀번호</span>
-        <input type="password" onChange={handleInputValue('password')} />
-      </div>
-      <div className="btn-withdrawal">
-        <button onClick={requestWithdrawal}>탈퇴</button>
-      </div>
-      <div className="alert-box">{errorMessage}</div>
+      {isModal ? (
+        <div>
+          <Modal>탈퇴 완료하였습니다. Goodbye</Modal>
+        </div>
+      ) : (
+        <div>
+          <div className="passwordField">
+            <span>비밀번호</span>
+            <input type="password" onChange={handleInputValue('password')} />
+          </div>
+          <div className="btn-withdrawal">
+            <button onClick={requestWithdrawal}>탈퇴</button>
+          </div>
+          <div className="alert-box">{errorMessage}</div>
+        </div>
+      )}
     </div>
   );
 }

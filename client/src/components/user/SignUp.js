@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Modal from '../Modal';
 import { useNavigate } from 'react-router-dom';
-
 axios.defaults.withCredentials = true;
 
 export default function SignUp({ handleUsername }) {
@@ -32,7 +31,7 @@ export default function SignUp({ handleUsername }) {
     } else {
       axios({
         method: 'POST',
-        url: `${process.env.REACT_APP_SERVER_URL}/user/signup`,
+        url: `${process.env.REACT_APP_SERVER_URL}/user/signup/general`,
         data: {
           email,
           username,
@@ -40,12 +39,11 @@ export default function SignUp({ handleUsername }) {
         },
       })
         .then((result) => {
-          if (result.status === 200) {
-            console.log('@@@@@', result);
+          if (result.status === 201) {
             setUserModal(true);
             const username = result.data.data.userInfo.username;
             handleUsername(username);
-            navigate('/booklist');
+            navigate('/');
           }
         })
         .catch((err) => {

@@ -11,6 +11,7 @@
   align-items: center;
   height: 100vh;
   background-color: #9fb7cd;
+  background: url(./background-pic.jpg);
 }
 
 #titleBar {
@@ -39,6 +40,11 @@
 
 .loginContainer {
   margin-top: 20px;
+  background-color: rgba(255, 255, 255, 0.7);
+  width: 30em;
+  height: 30em;
+  border-radius: 40px;
+  margin: auto;
 }
 
 .inputField {

@@ -16,7 +16,7 @@ module.exports = {
       published_at,
       publisher,
       url,
-      review: reviewContents,
+      reviewContents,
       page,
     } = req.body;
     const bookData = {
