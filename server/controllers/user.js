@@ -72,7 +72,7 @@ module.exports = {
               email,
               created_at: new Date()
             }
-            res.status(200).json({
+            res.status(201).json({
               data: { userInfo },
               message: "Created",
             })
@@ -120,6 +120,7 @@ module.exports = {
         if (result === 'Wrong password') {
           res.status(401).json({ message: 'Wrong password' });
         } else {
+          res.clearCookie('accessToken')
           res.status(200).json({ message: 'ok' });
         }
       }

@@ -21,7 +21,7 @@ export default function Withdrawal() {
       axios({
         method: 'POST',
         url: `${process.env.REACT_APP_SERVER_URL}/user/withdrawal`,
-        data: password,
+        data: { password },
       })
         .then((result) => {
           if (result.status === 200) {

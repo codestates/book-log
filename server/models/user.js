@@ -78,6 +78,8 @@ module.exports = {
   `;
   db.query(queryString, (error, result) => {
     if (error) throw error;
+    console.log(result)
+    console.log(password)
     if (result[0].password !== password) {
       callback(error, 'Wrong password')
     } else {

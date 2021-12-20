@@ -37,7 +37,7 @@ export default function Login({ handleLogin, handleUsername }) {
           }
         })
         .catch((err) => {
-          if (err.response.status === 400) {
+          if (err.response.status === 401) {
             setErrorMessage('이메일 또는 비밀번호가 틀렸습니다.');
           } else {
             setErrorMessage('서버에 문제가 있습니다. 잠시 후 시도해주세요.');

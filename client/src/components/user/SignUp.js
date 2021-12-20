@@ -39,11 +39,11 @@ export default function SignUp({ handleUsername }) {
         },
       })
         .then((result) => {
-          if (result.status === 200) {
+          if (result.status === 201) {
             setUserModal(true);
             const username = result.data.data.userInfo.username;
             handleUsername(username);
-            navigate('/booklist');
+            navigate('/');
           }
         })
         .catch((err) => {
