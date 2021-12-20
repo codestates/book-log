@@ -10,19 +10,23 @@ module.exports = {
       res.status(401).json({ message: 'Invalid user' });
     } else {
       const { title } = req.query;
-      const {
-        data: { documents },
-      } = await axios.get(
-        encodeURI(
-          `https://dapi.kakao.com/v3/search/book?query=${title}&target=title`
-        ),
-        {
-          headers: {
-            Authorization: `KakaoAK ${process.env.KAKAO_API_KEY}`,
-          },
-        }
-      );
-      res.json({ message: 'ok', data: documents });
+      try {
+        const {
+          data: { documents },
+        } = await axios.get(
+          encodeURI(
+            `https://dapi.kakao.com/v3/search/book?query=${title}&target=title`
+          ),
+          {
+            headers: {
+              Authorization: `KakaoAK ${process.env.KAKAO_API_KEY}`,
+            },
+          }
+        );
+        res.json({ message: 'ok', data: documents });
+      } catch (err) {
+        res.status(500).json({ message: 'server error' });
+      }
     }
   },
   list: (req, res) => {
