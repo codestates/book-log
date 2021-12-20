@@ -40,12 +40,12 @@ export default function SignUp({ handleUsername }) {
         },
       })
         .then((result) => {
-          if (result.status === 200) {
+          if (result.status === 201) {
             console.log('@@@@@', result);
             setUserModal(true);
             const username = result.data.data.userInfo.username;
             handleUsername(username);
-            navigate('/booklist');
+            navigate('/');
           }
         })
         .catch((err) => {
