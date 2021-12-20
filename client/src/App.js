@@ -12,6 +12,7 @@ import BookListPage from './pages/BookListPage';
 import ReviewListPage from './pages/ReviewListPage';
 import SelectBookPage from './pages/SelectBookPage';
 import ReviewInputPage from './pages/ReviewInputPage';
+import GoogleLoginPage from './pages/GoogleLoginPage';
 
 function App() {
   const [isLogin, setIsLogin] = useState(true);
@@ -86,6 +87,16 @@ function App() {
           <Route
             path="/reviewinput"
             element={<ReviewInputPage bookInfo={bookInfo} />}
+          ></Route>
+          <Route
+            exact
+            path="/login/google"
+            element={
+              <GoogleLoginPage
+                handleLogin={handleLogin}
+                handleUsername={handleUsername}
+              />
+            }
           ></Route>
         </Routes>
       </Router>

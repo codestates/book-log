@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+require('dotenv').config();
 
 axios.defaults.withCredentials = true;
 
@@ -21,7 +22,7 @@ export default function Login({ handleLogin, handleUsername }) {
     } else {
       axios({
         method: 'POST',
-        url: `${process.env.REACT_APP_SERVER_URL}/user/login`,
+        url: `${process.env.REACT_APP_SERVER_URL}/user/login/general`,
         data: {
           email,
           password,
