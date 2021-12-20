@@ -32,7 +32,7 @@ export default function SignUp({ handleUsername }) {
     } else {
       axios({
         method: 'POST',
-        url: 'http://localhost:4000/user/signup',
+        url: `${process.env.REACT_APP_SERVER_URL}/user/signup`,
         data: {
           email,
           username,
