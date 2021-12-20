@@ -1,7 +1,42 @@
-const { query } = require('../db');
 const db = require('../db');
 
 module.exports = {
+  mail: (callback) => {
+    const memberQuery = `SELECT id, username, email FROM user`;
+    db.query(memberQuery, (error, users) => {
+      if (error) throw error;
+      users.map((user) => {
+        const reviewsQuery = `
+          SELECT book.title, book.thumbnail, review.page, review.contents, review.created_at
+          FROM review
+          JOIN book ON review.book_id = book.id
+          WHERE user_id = ${user.id} AND book.created_at BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK ) AND now()
+        `;
+        db.query(reviewsQuery, (error, reviews) => {
+          if (error) throw error;
+          const userData = { ...user };
+          const reviewData = { user_data: userData, data: {} };
+          reviews.map((review) => {
+            let { data } = reviewData;
+            const { title, thumbnail, page, contents, created_at } = review;
+            const content = { contents, created_at };
+            if (!data[title]) {
+              data[title] = { title, thumbnail, review_data: {} };
+            }
+            if (!data[title]['review_data'][page]) {
+              data[title]['review_data'][page] = { page, reviews: [] };
+            }
+            data[title]['review_data'][page]['reviews'].push(content);
+          });
+          reviewData.data = Object.values(reviewData.data);
+          reviewData.data.map((el) => {
+            el.review_data = Object.values(el.review_data);
+          });
+          callback(error, reviewData);
+        });
+      });
+    });
+  },
   new: (userId, bookData, reviewData, callback) => {
     const {
       title,
@@ -62,7 +97,6 @@ module.exports = {
                 }
               );
             });
-            console.log(result);
           }
         );
       } else {

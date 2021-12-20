@@ -6,8 +6,10 @@ const https = require('https');
 const router = require('./routes');
 require('dotenv').config();
 
-const PORT = process.env.PORT || 80;
+const scheduler = require('./controllers/mail/corn');
 
+const PORT = process.env.PORT || 80;
+scheduler();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
