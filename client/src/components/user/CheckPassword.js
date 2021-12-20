@@ -18,7 +18,7 @@ export default function CheckPassword() {
     } else {
       axios({
         method: 'POST',
-        url: 'http://localhost:4000/user/password/check',
+        url: `${process.env.REACT_APP_SERVER_URL}/user/password/check`,
         data: {
           password,
         },

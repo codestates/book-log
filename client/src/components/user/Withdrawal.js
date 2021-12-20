@@ -18,7 +18,7 @@ export default function Withdrawal() {
     } else {
       axios({
         method: 'POST',
-        url: 'http://localhost:4000/user/withdrawal',
+        url: `${process.env.REACT_APP_SERVER_URL}/user/withdrawal`,
         data: password,
       })
         .then((result) => {
