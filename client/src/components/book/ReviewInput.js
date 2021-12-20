@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 axios.defaults.withCredentials = true;
 
-export default function ReviewInput() {
+export default function ReviewInput({ bookInfo }) {
   const today = new Date();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
@@ -23,21 +23,18 @@ export default function ReviewInput() {
         method: 'POST',
         url: `${process.env.REACT_APP_SERVER_URL}/book/new`,
         data: {
-          title: '',
-          contents: '',
-          isbn: '',
-          thumbnail: '',
-          author: '',
-          published_at: '',
-          publisher: '',
-          url: '',
+          ...bookInfo,
+          published_at: bookInfo.datetime,
+          author: bookInfo.authors[0],
           reviewContents: reviewContent.content,
           page: reviewContent.page,
         },
       })
         .then((result) => {
           if (result.status === 200) {
-            navigate('/booklist/reviewlist');
+            navigate('/booklist/reviewlist', {
+              state: { book_id: result.data.data.book_id },
+            });
           }
         })
         .catch((err) => {
