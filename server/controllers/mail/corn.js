@@ -3,7 +3,7 @@ const mailSender = require('./mailSender');
 const { review } = require('../../models');
 
 const scheduler = () => {
-  corn.schedule('* * * * *', function () {
+  corn.schedule('0 8 1 * *', function () {
     review.mail((err, result) => {
       if (err) throw err;
       const { email, username } = result.user_data;
