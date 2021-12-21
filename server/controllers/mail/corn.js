@@ -1,9 +1,9 @@
-const corn = require('node-cron');
+const cron = require('node-cron');
 const mailSender = require('./mailSender');
 const { review } = require('../../models');
 
 const scheduler = () => {
-  corn.schedule('0 8 1 * *', function () {
+  cron.schedule('0 8 1 * *', function () {
     review.mail((err, result) => {
       if (err) throw err;
       const { email, username } = result.user_data;
