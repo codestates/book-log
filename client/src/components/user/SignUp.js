@@ -2,8 +2,23 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Modal from '../Modal';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 axios.defaults.withCredentials = true;
 
+const SignUpModal = styled(Modal)``;
+
+const SignUpContainer = styled.div`
+  background-color: rgba(255, 255, 255, 0.7);
+  width: 50vw;
+  height: 60vh;
+  border-radius: 40px;
+  margin: 3rem auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+`;
 export default function SignUp({ handleUsername }) {
   const [signupInfo, setSignUpInfo] = useState({
     email: '',
@@ -42,8 +57,8 @@ export default function SignUp({ handleUsername }) {
           if (result.status === 201) {
             setUserModal(true);
             const username = result.data.data.userInfo.username;
-            handleUsername(username);
-            navigate('/');
+            // handleUsername(username); 다시 로그인해야하므로 username 변경 안해도 됨
+            setTimeout(() => navigate('/'), 3000);
           }
         })
         .catch((err) => {
@@ -56,33 +71,66 @@ export default function SignUp({ handleUsername }) {
     }
   };
   return (
-    <div className="signUpContainer">
+    <SignUpContainer>
+      {usermodal ? (
+        <SignUpModal>
+          <br />
+          <div>{signupInfo.username}님의 회원가입을 축하합니다!!!!</div>
+          <br />
+          <div>가입하신 정보로 로그인해주세요.</div>
+          <br />
+          <div> 잠시후 로그인 페이지로 이동합니다...</div>
+          <br />
+          <button onClick={() => navigate('/')}>로그인 화면 으로 이동</button>
+        </SignUpModal>
+      ) : null}
       <center>
-        <h1> 사용할 이메일, username, 비밀번호를 입력해주세요 </h1>
+        <h2 id="signup-title">
+          사용할 이메일, username, 비밀번호를 입력해주세요{' '}
+        </h2>
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="inputField">
-            <span>Email</span>
-            <input type="email" onChange={handleInputValue('email')} />
+            <div>Email </div>
+            <input
+              type="email"
+              onChange={handleInputValue('email')}
+              className="inputwidth"
+            />
           </div>
           <div className="inputField">
-            <span> username</span>
-            <input type="text" onChange={handleInputValue('username')} />
+            <div> username </div>
+            <input
+              type="text"
+              onChange={handleInputValue('username')}
+              className="inputwidth"
+            />
           </div>
           <div className="passwordField">
-            <span>비밀번호</span>
-            <input type="password" onChange={handleInputValue('password')} />
+            <div>비밀번호 </div>
+            <input
+              type="password"
+              onChange={handleInputValue('password')}
+              className="inputwidth"
+            />
           </div>
           <div className="passwordField">
-            <span>비밀번호 확인</span>
-            <input type="password" onChange={handleInputValue('repassword')} />
+            <div>비밀번호 확인</div>
+            <input
+              type="password"
+              onChange={handleInputValue('repassword')}
+              className="inputwidth"
+            />
           </div>
-          <button className="btn-signup" type="submit" onClick={handleSignUp}>
+          <button
+            className="btn btn-signup"
+            type="submit"
+            onClick={handleSignUp}
+          >
             SignUp
           </button>
           <div className="alert-box">{errorMessage}</div>
-          {usermodal ? <Modal username={signupInfo.username} /> : ''}
         </form>
       </center>
-    </div>
+    </SignUpContainer>
   );
 }
