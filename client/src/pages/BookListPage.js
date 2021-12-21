@@ -5,6 +5,9 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import PageTitle from '../components/PageTitle';
+import Modal from '../components/Modal';
+import { useNavigate } from 'react-router';
+const BeforeLoginModal = styled(Modal)``;
 
 const BookListContainer = styled.div`
   background-color: rgba(255, 255, 255, 0.7);
@@ -61,12 +64,13 @@ const Cover = styled(BookCover)`
   border-radius: 0.3rem;
 `;
 
-export default function BookListPage({ handleCurrentbook, currentBook }) {
+export default function BookListPage({ handleCurrentbook, currentBook, isLogin }) {
+
   axios.defaults.withCredentials = true;
 
   const [bookList, setBookList] = useState([]); // **
   const [errorMessage, setErrorMessage] = useState(''); // **
-
+  const navigate = useNavigate();
   const bookListRequest = () => {
     axios({
       method: 'GET',
@@ -89,28 +93,37 @@ export default function BookListPage({ handleCurrentbook, currentBook }) {
   }, []);
   console.log(bookList);
   return (
-    <BookListContainer>
-      <PageTitle>도서 목록</PageTitle>
-      <ButtonRow>
-        <Button className="add-bookbtn">
-          <AddLink to="/review/book">도서 추가</AddLink>
-        </Button>
-      </ButtonRow>
-      <BookContainer className="book-list">
-        {bookList.length !== 0 ? (
-          bookList.map((book) => (
-            <Cover
-              key={book.book_id}
-              book={book}
-              handleCurrentbook={handleCurrentbook}
-              currentBook={currentBook}
-            />
-          ))
-        ) : (
-          <NoBook>저장한 도서가 없습니다. 도서를 추가해주세요.</NoBook>
-        )}
-      </BookContainer>
-      <div className="alert-box">{errorMessage}</div>
-    </BookListContainer>
+    <div>
+      {isLogin ? (
+        <BookListContainer>
+          <PageTitle>도서 목록</PageTitle>
+          <ButtonRow>
+            <Button className="add-bookbtn">
+              <AddLink to="/review/book">도서 추가</AddLink>
+            </Button>
+          </ButtonRow>
+          <BookContainer className="book-list">
+            {bookList.length !== 0 ? (
+              bookList.map((book) => (
+                <Cover
+                  key={book.book_id}
+                  book={book}
+                  handleCurrentbook={handleCurrentbook}
+                  currentBook={currentBook}
+                />
+              ))
+            ) : (
+              <NoBook>저장한 도서가 없습니다. 도서를 추가해주세요.</NoBook>
+            )}
+          </BookContainer>
+          <div className="alert-box">{errorMessage}</div>
+        </BookListContainer>
+      ) : (
+        <BeforeLoginModal>
+          <div className="beforeLogin">로그인 후 사용해주세요.</div>
+          <button onClick={() => navigate('/')}>로그인 화면으로 이동</button>
+        </BeforeLoginModal>
+      )}
+    </div>
   );
 }

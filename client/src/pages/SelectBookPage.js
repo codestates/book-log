@@ -6,6 +6,8 @@ import BookInfoBox from '../components/book/BookInfoBox';
 import Modal from '../components/Modal';
 import PageTitle from '../components/PageTitle';
 
+const BeforeLoginModal = styled(Modal)``;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -102,7 +104,7 @@ const Button = styled.button`
   height: 2rem;
 `;
 
-const SelectBookPage = ({ handleBookInfo }) => {
+const SelectBookPage = ({ handleBookInfo, isLogin }) => {
   const [bookList, setBookList] = useState([]);
   const [search, setSearch] = useState('');
   const [selectedBook, setSelectedBook] = useState({});
@@ -147,60 +149,71 @@ const SelectBookPage = ({ handleBookInfo }) => {
     }
   };
   return (
-    <Container>
-      {isModal ? (
-        <BookModal>
-          <ModalContainer>
-            <ModalContents>
-              <ModalCover
-                src={
-                  selectedBook.thumbnail
-                    ? selectedBook.thumbnail
-                    : 'https://user-images.githubusercontent.com/89366567/146297427-157c1ece-12f5-4d33-b198-d296275f7981.png'
-                }
-              />
-              <ModalInfo>
-                <ModalTitle>
-                  {selectedBook.title} | {selectedBook.authors[0]} |{' '}
-                  {selectedBook.publisher}
-                </ModalTitle>
-                <ModalDetail>{selectedBook.contents}...</ModalDetail>
-              </ModalInfo>
-            </ModalContents>
-            <ModalBtn>
-              <Button onClick={() => buttonHandler('back')}>뒤로가기</Button>
-              <Button onClick={() => buttonHandler('select')}>선택</Button>
-            </ModalBtn>
-          </ModalContainer>
-        </BookModal>
-      ) : null}
-      <ContentContainer>
-        <TitleContainer>
-          <PageTitle>도서 선택</PageTitle>
-        </TitleContainer>
-        <SearchContainer>
-          <SearchInput
-            type="text"
-            placeholder="도서 제목을 입력하세요."
-            value={search}
-            onChange={handleChange}
-          />
-        </SearchContainer>
-        <BooksContainer>
-          {bookList.length > 0
-            ? bookList.map((book, idx) => {
-                return (
-                  <BookInfoBox
-                    book={book}
-                    idx={idx}
-                    clickHandler={clickHandler}
+    <div>
+      {isLogin ? (
+        <Container>
+          {isModal ? (
+            <BookModal>
+              <ModalContainer>
+                <ModalContents>
+                  <ModalCover
+                    src={
+                      selectedBook.thumbnail
+                        ? selectedBook.thumbnail
+                        : 'https://user-images.githubusercontent.com/89366567/146297427-157c1ece-12f5-4d33-b198-d296275f7981.png'
+                    }
                   />
-                );
-              })
-            : '검색 결과가 없습니다.'}
-        </BooksContainer>
-      </ContentContainer>
-    </Container>
+                  <ModalInfo>
+                    <ModalTitle>
+                      {selectedBook.title} | {selectedBook.authors[0]} |{' '}
+                      {selectedBook.publisher}
+                    </ModalTitle>
+                    <ModalDetail>{selectedBook.contents}...</ModalDetail>
+                  </ModalInfo>
+                </ModalContents>
+                <ModalBtn>
+                  <Button onClick={() => buttonHandler('back')}>
+                    뒤로가기
+                  </Button>
+                  <Button onClick={() => buttonHandler('select')}>선택</Button>
+                </ModalBtn>
+              </ModalContainer>
+            </BookModal>
+          ) : null}
+          <ContentContainer>
+            <TitleContainer>
+              <PageTitle>도서 선택</PageTitle>
+            </TitleContainer>
+            <SearchContainer>
+              <SearchInput
+                type="text"
+                placeholder="도서 제목을 입력하세요."
+                value={search}
+                onChange={handleChange}
+              />
+            </SearchContainer>
+            <BooksContainer>
+              {bookList.length > 0
+                ? bookList.map((book, idx) => {
+                    return (
+                      <BookInfoBox
+                        book={book}
+                        idx={idx}
+                        clickHandler={clickHandler}
+                      />
+                    );
+                  })
+                : '검색 결과가 없습니다.'}
+            </BooksContainer>
+          </ContentContainer>
+        </Container>
+      ) : (
+        <BeforeLoginModal>
+          <div className="beforeLogin">로그인 후 사용해주세요.</div>
+          <button onClick={() => navigate('/')}>로그인 화면으로 이동</button>
+        </BeforeLoginModal>
+      )}
+    </div>
   );
 };
 
