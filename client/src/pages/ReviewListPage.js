@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ReviewTitleList from '../components/book/ReviewTitleList';
 import ReviewList from '../components/book/ReviewList';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import styled from 'styled-components';
+import Modal from '../components/Modal';
+const BeforeLoginModal = styled(Modal)``;
 
 const ReviewListPageContainer = styled.div`
   background-color: rgba(255, 255, 255, 0.7);
@@ -15,10 +17,10 @@ const ReviewListPageContainer = styled.div`
   font-size: 14px;
 `;
 
-export default function ReviewListPage({ currentBook }) {
+export default function ReviewListPage({ currentBook, isLogin }) {
   const { state } = useLocation();
   axios.defaults.withCredentials = true;
-
+  const navigate = useNavigate();
   const bookId = currentBook.book_id || state.book_id;
   console.log(currentBook.book_id);
   console.log(`${process.env.REACT_APP_SERVER_URL}/book/${bookId}/review`);
@@ -56,26 +58,37 @@ export default function ReviewListPage({ currentBook }) {
   console.log(reviewList);
 
   return (
-    <div className="reviewlistBox">
-      <ReviewListPageContainer>
-        <div className="review-book-thumbnail">
-          <img
-            width="10%"
-            height="10%"
-            src={reviewList.book_data ? reviewList.book_data.thumbnail : null}
-          />
+    <div>
+      {isLogin ? (
+        <div className="reviewlistBox">
+          <ReviewListPageContainer>
+            <div className="review-book-thumbnail">
+              <img
+                width="10%"
+                height="10%"
+                src={
+                  reviewList.book_data ? reviewList.book_data.thumbnail : null
+                }
+              />
+            </div>
+            <div className="reviewtitles">
+              <ReviewTitleList
+                reviewList={reviewList}
+                handleCurrentReviews={handleCurrentReviews}
+              />
+            </div>
+            <div className="review-createdat">
+              <ReviewList currentReviews={currentReviews} />
+            </div>
+            <div className="alert-box">{errorMessage}</div>
+          </ReviewListPageContainer>
         </div>
-        <div className="reviewtitles">
-          <ReviewTitleList
-            reviewList={reviewList}
-            handleCurrentReviews={handleCurrentReviews}
-          />
-        </div>
-        <div className="review-createdat">
-          <ReviewList currentReviews={currentReviews} />
-        </div>
-        <div className="alert-box">{errorMessage}</div>
-      </ReviewListPageContainer>
+      ) : (
+        <BeforeLoginModal>
+          <div className="beforeLogin">로그인 후 사용해주세요.</div>
+          <button onClick={() => navigate('/')}>로그인 화면으로 이동</button>
+        </BeforeLoginModal>
+      )}
     </div>
   );
 }

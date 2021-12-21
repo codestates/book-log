@@ -11,7 +11,7 @@ const scheduler = () => {
       mailSender.sendGmail(email, username, reviewData);
     });
     //0 8 1 * *
-    console.log('running a task every minute');
+    console.log('running a task every month');
   });
 };
 

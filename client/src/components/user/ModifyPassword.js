@@ -1,6 +1,63 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import styled from 'styled-components';
+
+const PageContainer = styled.div`
+  width: 500px;
+  height: 500px;
+  border-radius: 40px;
+  margin: auto;
+  padding: 3em;
+  background-color: rgba(255, 255, 255, 0.7);
+  overflow: hidden;
+`;
+
+const PageTitle = styled.div`
+  margin: 0 0 10px;
+  padding: .5em;
+  font-size: 30px;
+`;
+
+const ModifyButton = styled.div`
+  margin: auto;
+  padding: .5em;
+  border-radius: 10px;
+  background-color: rgba(228, 150, 127, 1);
+  color: white;
+  text-align: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const ContentContainer = styled.div`
+  margin: auto;
+  padding: 3em;
+  align-items: center;
+  border-radius: 40px;
+  background-color: rgba(255, 255, 255, 0.9);
+`;
+
+const Content = styled.div`
+  max-width: 360px;
+  height: 180px;
+  margin: auto;
+  font-size: 14px;
+  text-align: center;
+
+  & > * {
+    width: 70%;
+    margin: 0 auto 10px;
+  }
+  
+  & > input, ${ModifyButton} {
+    width: 50%;
+  }
+`;
+
+
 
 export default function ModifyPassword() {
   const [modify, setModify] = useState({
@@ -46,20 +103,21 @@ export default function ModifyPassword() {
     }
   };
   return (
-    <div>
-      새로운 비밀번호를 입력해주세요.
-      <div className="passwordField">
-        <span>비밀번호</span>
-        <input type="password" onChange={handleInputValue('password')} />
-      </div>
-      <div className="passwordField">
-        <span>비밀번호 확인</span>
-        <input type="password" onChange={handleInputValue('repassword')} />
-      </div>
-      <button className="btn-modify" type="submit" onClick={transferPassword}>
-        변경
-      </button>
-      <div className="alert-box">{errorMessage}</div>
-    </div>
+    <PageContainer>
+      <PageTitle>
+        비밀번호 변경
+      </PageTitle>
+      <ContentContainer>
+        <Content>
+          <div>새로운 비밀번호를 입력해주세요.</div>
+          <input type="password" onChange={handleInputValue('password')} placeholder='비밀번호'/><br/>
+          <input type="password" onChange={handleInputValue('repassword')} placeholder='비밀번호 확인'/>
+          <ModifyButton onClick={transferPassword}>
+            변경
+          </ModifyButton>
+          <div className="alert-box">{errorMessage}</div>
+        </Content>
+      </ContentContainer>
+    </PageContainer>
   );
 }

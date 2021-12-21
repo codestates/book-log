@@ -7,7 +7,6 @@ const {
 } = require('./tokenFunctions');
 require('dotenv').config();
 
-
 module.exports = {
   login: {
     general: (req, res) => {
@@ -32,7 +31,7 @@ module.exports = {
     },
     social: (req, res) => {
       let { email, social } = req.body
-      social = generateHash(social)
+      social = generateHash(email + social)
       user.login.social(email, social, (error, result) => {
         if (error) {
           res.status(500).json({ message: 'Server Error' });
@@ -82,7 +81,7 @@ module.exports = {
     },
     social: (req, res) => {
       let { email, username, social } = req.body
-      social = generateHash(social)
+      social = generateHash(email + social)
       user.signup.social(email, username, social, (error, result) => {
         if (error) {
           res.status(500).json({ message: 'Server Error' });

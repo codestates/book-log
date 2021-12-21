@@ -6,7 +6,7 @@ const https = require('https');
 const router = require('./routes');
 require('dotenv').config();
 
-const scheduler = require('./controllers/mail/corn');
+const scheduler = require('./controllers/mail/cron');
 
 const PORT = process.env.PORT || 80;
 scheduler();
