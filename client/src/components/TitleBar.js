@@ -1,16 +1,27 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-export default function TitleBar(props) {
-  const [username, setUsername] = useState('guest');
-  if (props.username) {
-    setUsername(props.username);
-  }
+export default function TitleBar({ username, handleLogout, isLogin }) {
   return (
     <div id="titleBar">
-      <div id="barBox">
-        <button className="bar mypage"> {username}님의 마이페이지 </button>
-        <button className="bar logout"> 로그아웃 </button>
+      <div id="logo">
+        {isLogin ? (
+          <Link to="/review/book">BOOK LOG</Link>
+        ) : (
+          <Link to="/">BOOK LOG</Link>
+        )}
+      </div>
+      <div className=" bar mypage">
+        <Link to="/mypage">
+          {username}님의 {'\n'}마이페이지
+        </Link>
+      </div>
+      <div className=" bar logout">
+        <div className="bar logout">
+          <Link to="/" onClick={() => handleLogout()}>
+            로그아웃
+          </Link>
+        </div>
       </div>
     </div>
   );
