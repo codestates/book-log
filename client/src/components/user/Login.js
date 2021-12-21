@@ -53,14 +53,14 @@ export default function Login({ handleLogin, handleUsername }) {
     })
       .then((result) => result.data)
       .catch((err) => {
-        console.log(err)
-      })
-    window.location.href = authURL
-  }
+        console.log(err);
+      });
+    window.location.href = authURL;
+  };
 
   return (
     <div className="loginContainer">
-      <center>
+      <center className="signIn">
         <h1>Sign In</h1>
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="inputField">
@@ -72,20 +72,28 @@ export default function Login({ handleLogin, handleUsername }) {
             <input type="password" onChange={handleInputValue('password')} />
           </div>
 
-          <button className="btn-login" type="submit" onClick={loginRequest}>
+          <button className="login btn" type="submit" onClick={loginRequest}>
             <span>로그인</span>
           </button>
         </form>
+      </center>
+      <div className="signupBox">
+        <div className="google btn">
+          <input
+            type="button"
+            class="google-login-button"
+            value="Sign in with google"
+            onClick={googleLoginRequest}
+          />
+        </div>
         <div className="signupBox">
-          <div className="signupBox">
+          <div>
+            회원이 아니신가요?
             <Link to="/signup"> 회원가입</Link>
           </div>
-          <div className="signupBox">
-            <input type="button" class="google-login-button" value="google-login" onClick={googleLoginRequest}/>
-          </div>
         </div>
-        <div className="alert-box">{errorMessage}</div>
-      </center>
+      </div>
+      <div className="alert-box">{errorMessage}</div>
     </div>
   );
 }
