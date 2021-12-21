@@ -4,15 +4,17 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import PageTitle from '../components/PageTitle';
 
 const BookListContainer = styled.div`
   background-color: rgba(255, 255, 255, 0.7);
-  width: 500px;
-  height: 500px;
+  width: 60%;
+  height: 50rem;
   border-radius: 40px;
   margin: auto;
-  padding: 3em;
+  padding: 3rem;
   font-size: 14px;
+  margin-top: 2rem;
 `;
 const NoBook = styled.div`
   position: absolute;
@@ -22,6 +24,43 @@ const NoBook = styled.div`
   margin-top: -150px;
   font-size: 15px;
 `;
+
+const ButtonRow = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 2rem;
+`;
+
+const Button = styled.span`
+  padding: 0.3rem 0.7rem;
+  background-color: #0b3961;
+  border-radius: 0.2rem;
+`;
+
+const AddLink = styled(Link)`
+  text-decoration: none;
+  line-height: 1.5rem;
+  color: white;
+`;
+
+const BookContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 7rem);
+  grid-gap: 0rem 2rem;
+  padding: 2rem 2rem;
+  margin-top: 2rem;
+  overflow-y: scroll;
+  height: 35rem;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+`;
+
+const Cover = styled(BookCover)`
+  border-radius: 0.3rem;
+`;
+
 export default function BookListPage({ handleCurrentbook, currentBook }) {
   axios.defaults.withCredentials = true;
 
@@ -51,13 +90,16 @@ export default function BookListPage({ handleCurrentbook, currentBook }) {
   console.log(bookList);
   return (
     <BookListContainer>
-      <button className="add-bookbtn">
-        <Link to="/review/book">도서 추가</Link>
-      </button>
-      <div className="book-list">
+      <PageTitle>도서 목록</PageTitle>
+      <ButtonRow>
+        <Button className="add-bookbtn">
+          <AddLink to="/review/book">도서 추가</AddLink>
+        </Button>
+      </ButtonRow>
+      <BookContainer className="book-list">
         {bookList.length !== 0 ? (
           bookList.map((book) => (
-            <BookCover
+            <Cover
               key={book.book_id}
               book={book}
               handleCurrentbook={handleCurrentbook}
@@ -67,7 +109,7 @@ export default function BookListPage({ handleCurrentbook, currentBook }) {
         ) : (
           <NoBook>저장한 도서가 없습니다. 도서를 추가해주세요.</NoBook>
         )}
-      </div>
+      </BookContainer>
       <div className="alert-box">{errorMessage}</div>
     </BookListContainer>
   );

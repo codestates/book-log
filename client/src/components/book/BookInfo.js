@@ -7,6 +7,7 @@ const Cover = styled(BookCover)``;
 
 const BookBox = styled.div`
   display: flex;
+  padding-bottom: 0.6rem;
 `;
 
 const TitleInfo = styled.div`
@@ -14,7 +15,7 @@ const TitleInfo = styled.div`
 `;
 
 const BookInfoContainer = styled.div`
-  padding: 0.6rem 1.8rem;
+  padding: 0.6rem 1rem;
   padding-right: -3rem;
 `;
 
@@ -37,7 +38,7 @@ const BookPublishDate = styled.div`
 `;
 
 const BookContents = styled.div`
-  width: 50rem;
+  width: 45rem;
 `;
 
 const BookInfo = ({ book }) => {
@@ -54,9 +55,13 @@ const BookInfo = ({ book }) => {
       />
       <BookInfoContainer>
         <TitleInfo>
-          <BookTitle>{title}</BookTitle>
+          <BookTitle>
+            {title.length < 35 ? title : title.slice(0, 35) + '...'}
+          </BookTitle>
           <BookAuthor>{authors[0]}</BookAuthor>
-          <BookPublisher>{publisher}</BookPublisher>
+          <BookPublisher>
+            {publisher.length < 10 ? publisher : publisher.slice(0, 10) + '...'}
+          </BookPublisher>
           <BookPublishDate>{' ' + datetime.slice(0, 10)}</BookPublishDate>
         </TitleInfo>
         <BookContents>
