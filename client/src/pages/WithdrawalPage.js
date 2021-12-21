@@ -1,12 +1,29 @@
-import CheckPassword from '../components/user/CheckPassword';
 import Withdrawal from '../components/user/Withdrawal';
+import styled from 'styled-components';
+
+const PageContainer = styled.div`
+  width: 500px;
+  height: 500px;
+  border-radius: 40px;
+  margin: auto;
+  padding: 3em;
+  background-color: rgba(255, 255, 255, 0.7);
+  overflow: hidden;
+`;
+
+const PageTitle = styled.div`
+  margin: 0 0 10px;
+  padding: .5em;
+  font-size: 30px;
+`;
 
 export default function WithdrawalPage() {
   return (
-    <div>
-      <div>정말 탈퇴하시겠습니까? </div>
-      <div>본인 확인을 위해 비밀번호를 입력해주세요.</div>
+    <PageContainer>
+      <PageTitle>
+        회원탈퇴
+      </PageTitle>
       <Withdrawal />
-    </div>
+    </PageContainer>
   );
 }

@@ -2,6 +2,41 @@ import React, { useState } from 'react';
 import { useNavigate, useResolvedPath } from 'react-router-dom';
 import axios from 'axios';
 import Modal from '../Modal';
+import styled from 'styled-components';
+
+const ContentContainer = styled.div`
+  margin: auto;
+  padding: 3em;
+  border-radius: 40px;
+  background-color: rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+`;
+
+const Content = styled.div`
+  max-width: 360px;
+  height: 135px;
+  margin: auto;
+  font-size: 14px;
+  text-align: center;
+  
+  & > * {
+    width: 70%;
+    margin: 0 auto 10px;
+  }
+`;
+
+const WithdrawalButton = styled.div`
+  margin: auto;
+  padding: .5em;
+  border-radius: 10px;
+  background-color: rgba(228, 150, 127, 1);
+  color: white;
+  text-align: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 export default function Withdrawal() {
   const [checkPassword, setCheckPassword] = useState({
@@ -40,23 +75,23 @@ export default function Withdrawal() {
     }
   };
   return (
-    <div>
+    <ContentContainer>
       {isModal ? (
         <div>
           <Modal>탈퇴 완료하였습니다. Goodbye</Modal>
         </div>
       ) : (
-        <div>
-          <div className="passwordField">
-            <span>비밀번호</span>
-            <input type="password" onChange={handleInputValue('password')} />
+        <Content>
+          <div>
+            정말 탈퇴하시겠습니까? <br />
+            본인 확인을 위해 비밀번호를 <br />
+            입력해주세요.
           </div>
-          <div className="btn-withdrawal">
-            <button onClick={requestWithdrawal}>탈퇴</button>
-          </div>
+          <input type="password" onChange={handleInputValue('password')} placeholder='비밀번호' />
+          <WithdrawalButton onClick={requestWithdrawal}>탈퇴</WithdrawalButton>
           <div className="alert-box">{errorMessage}</div>
-        </div>
+        </Content>
       )}
-    </div>
+    </ContentContainer>
   );
 }
