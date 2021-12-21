@@ -3,6 +3,17 @@ import axios from 'axios';
 import ReviewTitleList from '../components/book/ReviewTitleList';
 import ReviewList from '../components/book/ReviewList';
 import { useLocation } from 'react-router';
+import styled from 'styled-components';
+
+const ReviewListPageContainer = styled.div`
+  background-color: rgba(255, 255, 255, 0.7);
+  width: 500px;
+  height: 500px;
+  border-radius: 40px;
+  margin: auto;
+  padding: 3em;
+  font-size: 14px;
+`;
 
 export default function ReviewListPage({ currentBook }) {
   const { state } = useLocation();
@@ -46,23 +57,25 @@ export default function ReviewListPage({ currentBook }) {
 
   return (
     <div className="reviewlistBox">
-      <div className="review-book-thumbnail">
-        <img
-          width="10%"
-          height="10%"
-          src={reviewList.book_data ? reviewList.book_data.thumbnail : null}
-        />
-      </div>
-      <div className="reviewtitles">
-        <ReviewTitleList
-          reviewList={reviewList}
-          handleCurrentReviews={handleCurrentReviews}
-        />
-      </div>
-      <div className="review-createdat">
-        <ReviewList currentReviews={currentReviews} />
-      </div>
-      <div className="alert-box">{errorMessage}</div>
+      <ReviewListPageContainer>
+        <div className="review-book-thumbnail">
+          <img
+            width="10%"
+            height="10%"
+            src={reviewList.book_data ? reviewList.book_data.thumbnail : null}
+          />
+        </div>
+        <div className="reviewtitles">
+          <ReviewTitleList
+            reviewList={reviewList}
+            handleCurrentReviews={handleCurrentReviews}
+          />
+        </div>
+        <div className="review-createdat">
+          <ReviewList currentReviews={currentReviews} />
+        </div>
+        <div className="alert-box">{errorMessage}</div>
+      </ReviewListPageContainer>
     </div>
   );
 }
