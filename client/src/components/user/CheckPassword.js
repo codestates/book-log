@@ -1,6 +1,31 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import styled from 'styled-components';
+
+const ContentContainer = styled.div`
+  margin: 12px auto;
+  display: flex;
+  flex-direction: column;
+
+  & * {
+    width: 70%;
+    margin: 10px auto;
+  }
+`;
+
+const CheckButton = styled.div`
+  margin: auto;
+  padding: .5em;
+  border-radius: 10px;
+  background-color: rgba(228, 150, 127, 1);
+  color: white;
+  text-align: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 export default function CheckPassword() {
   const [checkPassword, setCheckPassword] = useState({
@@ -38,15 +63,10 @@ export default function CheckPassword() {
     }
   };
   return (
-    <div>
-      <div className="passwordField">
-        <span>비밀번호</span>
-        <input type="password" onChange={handleInputValue('password')} />
-      </div>
-      <div className="btn-confirm">
-        <button onClick={checkhandler}>확인</button>
-      </div>
+    <ContentContainer>
+      <input type="password" onChange={handleInputValue('password')} placeholder="비밀번호" />
+      <CheckButton onClick={checkhandler}>확인</CheckButton>
       <div className="alert-box">{errorMessage}</div>
-    </div>
+    </ContentContainer>
   );
 }
