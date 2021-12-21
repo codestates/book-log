@@ -16,7 +16,7 @@ const PageContainer = styled.div`
 
 const PageTitle = styled.div`
   margin: 0 0 10px;
-  padding: .5em;
+  padding: 0.5em;
   font-size: 30px;
 `;
 
@@ -25,16 +25,16 @@ export default function WithdrawalPage({ isLogin }) {
   return (
     <>
       {isLogin ? (
-       <PageContainer>
-          <PageTitle>
-            회원탈퇴
-          </PageTitle>
-          <Withdrawal /> 
-       </PageContainer>
+        <PageContainer>
+          <PageTitle>회원탈퇴</PageTitle>
+          <Withdrawal />
+        </PageContainer>
       ) : (
         <BeforeLoginModal>
           <div className="beforeLogin">로그인 후 사용해주세요.</div>
-          <button onClick={() => navigate('/')}>로그인 화면으로 이동</button>
+          <button onClick={() => navigate('/', { replace: true })}>
+            로그인 화면으로 이동
+          </button>
         </BeforeLoginModal>
       )}
     </>
