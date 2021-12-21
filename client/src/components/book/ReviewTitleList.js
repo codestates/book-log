@@ -7,10 +7,8 @@ export default function ReviewTitleList({ reviewList, handleCurrentReviews }) {
 
   return (
     <div className="review-title-list">
-      <button className="add-review">
-        <Link to="/reviewinput">감상 추가</Link>
-      </button>
-      <div className="review-titles">
+      <div className="page">페이지</div>
+      <div className="pages">
         {booksReviews.length !== 0
           ? booksReviews.map((book) => (
               <ReviewTitle
@@ -21,6 +19,9 @@ export default function ReviewTitleList({ reviewList, handleCurrentReviews }) {
             ))
           : '리뷰를 추가해주세요.'}
       </div>
+      <button className="add-review">
+        <Link to="/reviewinput">작성하기</Link>
+      </button>
     </div>
   );
 }

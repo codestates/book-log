@@ -7,6 +7,16 @@ import styled from 'styled-components';
 import Modal from '../components/Modal';
 const BeforeLoginModal = styled(Modal)``;
 
+const ReviewListPageContainer = styled.div`
+  background-color: rgba(255, 255, 255, 0.7);
+  width: 500px;
+  height: 500px;
+  border-radius: 40px;
+  margin: auto;
+  padding: 3em;
+  font-size: 14px;
+`;
+
 export default function ReviewListPage({ currentBook, isLogin }) {
   const { state } = useLocation();
   axios.defaults.withCredentials = true;
@@ -51,23 +61,27 @@ export default function ReviewListPage({ currentBook, isLogin }) {
     <div>
       {isLogin ? (
         <div className="reviewlistBox">
-          <div className="review-book-thumbnail">
-            <img
-              width="10%"
-              height="10%"
-              src={reviewList.book_data ? reviewList.book_data.thumbnail : null}
-            />
-          </div>
-          <div className="reviewtitles">
-            <ReviewTitleList
-              reviewList={reviewList}
-              handleCurrentReviews={handleCurrentReviews}
-            />
-          </div>
-          <div className="review-createdat">
-            <ReviewList currentReviews={currentReviews} />
-          </div>
-          <div className="alert-box">{errorMessage}</div>
+          <ReviewListPageContainer>
+            <div className="review-book-thumbnail">
+              <img
+                width="10%"
+                height="10%"
+                src={
+                  reviewList.book_data ? reviewList.book_data.thumbnail : null
+                }
+              />
+            </div>
+            <div className="reviewtitles">
+              <ReviewTitleList
+                reviewList={reviewList}
+                handleCurrentReviews={handleCurrentReviews}
+              />
+            </div>
+            <div className="review-createdat">
+              <ReviewList currentReviews={currentReviews} />
+            </div>
+            <div className="alert-box">{errorMessage}</div>
+          </ReviewListPageContainer>
         </div>
       ) : (
         <BeforeLoginModal>
