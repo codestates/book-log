@@ -41,7 +41,10 @@ const BookContents = styled.div`
 `;
 
 const BookInfo = ({ book }) => {
-  const { thumbnail, title, authors, publisher, datetime, contents } = book;
+  const { title, authors, publisher, datetime, contents } = book;
+  const thumbnail = book.thumbnail
+    ? book.thumbnail
+    : 'https://user-images.githubusercontent.com/89366567/146297427-157c1ece-12f5-4d33-b198-d296275f7981.png';
   return (
     <BookBox>
       <Cover
@@ -57,7 +60,7 @@ const BookInfo = ({ book }) => {
           <BookPublishDate>{' ' + datetime.slice(0, 10)}</BookPublishDate>
         </TitleInfo>
         <BookContents>
-          {contents.length === 0 ? '소개 없음' : contents}
+          {contents.length === 0 ? '소개 없음' : contents + ' ...'}
         </BookContents>
       </BookInfoContainer>
     </BookBox>

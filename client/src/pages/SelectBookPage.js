@@ -10,6 +10,9 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 2rem 17rem;
+  height: 100vh;
+  margin-top: -0.3rem;
+  background: rgba(255, 255, 255, 0.3);
 `;
 
 const TitleContainer = styled.div`
@@ -23,11 +26,20 @@ const Title = styled.div`
 
 const SearchContainer = styled.div`
   padding: 3rem 2.5rem;
+  text-align: center;
+`;
+
+const ContentContainer = styled.div`
+  background: rgba(255, 255, 255);
+  border-radius: 1rem;
+  width: 90%;
+  padding: 1rem 2rem;
 `;
 
 const BooksContainer = styled.div`
   width: 100%;
-  background-color: white;
+  background-color: rgb(247, 237, 222, 0.8);
+  padding: 0.7rem 1rem;
   height: 40rem;
   overflow-y: scroll;
   border-radius: 3px;
@@ -36,7 +48,7 @@ const BooksContainer = styled.div`
 const SearchInput = styled.input`
   border: none;
   background: none;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid #2a4a69;
   padding: 0.3rem 0.5rem;
   font-size: 1.3rem;
   width: 30vw;
@@ -122,14 +134,19 @@ const SelectBookPage = ({ handleBookInfo }) => {
       navigate('/reviewinput');
     }
   };
-
   return (
     <Container>
       {isModal ? (
         <BookModal>
           <ModalContainer>
             <ModalContents>
-              <ModalCover src={selectedBook.thumbnail} />
+              <ModalCover
+                src={
+                  selectedBook.thumbnail
+                    ? selectedBook.thumbnail
+                    : 'https://user-images.githubusercontent.com/89366567/146297427-157c1ece-12f5-4d33-b198-d296275f7981.png'
+                }
+              />
               <ModalInfo>
                 <ModalTitle>
                   {selectedBook.title} | {selectedBook.authors[0]} |{' '}
@@ -145,28 +162,32 @@ const SelectBookPage = ({ handleBookInfo }) => {
           </ModalContainer>
         </BookModal>
       ) : null}
-      <TitleContainer>
-        <Title>도서 선택</Title>
-      </TitleContainer>
-      <SearchContainer>
-        <SearchInput
-          type="text"
-          placeholder="도서 제목을 입력하세요."
-          value={search}
-          onChange={handleChange}
-        />
-      </SearchContainer>
-      <BooksContainer>
-        {bookList.length > 0 ? (
-          bookList.map((book, idx) => {
-            return (
-              <BookInfoBox book={book} idx={idx} clickHandler={clickHandler} />
-            );
-          })
-        ) : (
-          <div>검색 결과가 없습니다</div>
-        )}
-      </BooksContainer>
+      <ContentContainer>
+        <TitleContainer>
+          <Title>도서 선택</Title>
+        </TitleContainer>
+        <SearchContainer>
+          <SearchInput
+            type="text"
+            placeholder="도서 제목을 입력하세요."
+            value={search}
+            onChange={handleChange}
+          />
+        </SearchContainer>
+        <BooksContainer>
+          {bookList.length > 0
+            ? bookList.map((book, idx) => {
+                return (
+                  <BookInfoBox
+                    book={book}
+                    idx={idx}
+                    clickHandler={clickHandler}
+                  />
+                );
+              })
+            : '검색 결과가 없습니다.'}
+        </BooksContainer>
+      </ContentContainer>
     </Container>
   );
 };
