@@ -64,35 +64,43 @@ export default function Login({ handleLogin, handleUsername }) {
         <h1>Sign In</h1>
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="inputField">
-            <span>이메일</span>
-            <input type="email" onChange={handleInputValue('email')} />
+            <div> 이메일 </div>
+            <input
+              type="email"
+              onChange={handleInputValue('email')}
+              className="inputwidth"
+            />
           </div>
           <div className="passwordField">
-            <span>비밀번호</span>
-            <input type="password" onChange={handleInputValue('password')} />
+            <div>비밀번호</div>
+            <input
+              type="password"
+              onChange={handleInputValue('password')}
+              className="inputwidth"
+            />
           </div>
 
           <button className="login btn" type="submit" onClick={loginRequest}>
             <span>로그인</span>
           </button>
+          <div className="google btn">
+            <input
+              type="button"
+              class="google-login-button"
+              value="Sign in with google"
+              onClick={googleLoginRequest}
+            />
+          </div>
         </form>
       </center>
-      <div className="signupBox">
-        <div className="google btn">
-          <input
-            type="button"
-            class="google-login-button"
-            value="Sign in with google"
-            onClick={googleLoginRequest}
-          />
-        </div>
-        <div className="signupBox">
-          <div>
-            회원이 아니신가요?
-            <Link to="/signup"> 회원가입</Link>
-          </div>
+
+      <div className="login-signupBox">
+        <div>
+          회원이 아니신가요?
+          <Link to="/signup"> 회원가입</Link>
         </div>
       </div>
+
       <div className="alert-box">{errorMessage}</div>
     </div>
   );
