@@ -1,5 +1,9 @@
 import CheckPassword from '../components/user/CheckPassword';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router';
+import Modal from '../components/Modal';
+
+const BeforeLoginModal = styled(Modal)``;
 
 const PageContainer = styled.div`
   width: 500px;
@@ -35,6 +39,7 @@ const Content = styled.div`
 `;
 
 export default function ChkPassPage({ isLogin }) {
+  const navigate = useNavigate();
   return (
     <PageContainer>
       <PageTitle>
@@ -48,7 +53,10 @@ export default function ChkPassPage({ isLogin }) {
           </Content>
         </ContentContainer>
       ) : (
-        <div className="beforeLogin">로그인 후 사용해주세요.</div>
+        <BeforeLoginModal>
+          <div className="beforeLogin">로그인 후 사용해주세요.</div>
+          <button onClick={() => navigate('/')}>로그인 화면으로 이동</button>
+        </BeforeLoginModal>
       )}
     </PageContainer>
   );

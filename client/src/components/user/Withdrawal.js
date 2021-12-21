@@ -38,7 +38,7 @@ const WithdrawalButton = styled.div`
   }
 `;
 
-export default function Withdrawal() {
+export default function Withdrawal({ handleUsername }) {
   const [checkPassword, setCheckPassword] = useState({
     password: '',
   });
@@ -62,14 +62,17 @@ export default function Withdrawal() {
           if (result.status === 200) {
             setModal(true);
             // alert('탈퇴 완료하였습니다. Goodbye');
+            handleUsername('guest');
             setTimeout(() => navigate('/'), 2000);
           }
         })
         .catch((err) => {
           if (err.response.status === 401) {
             setErrorMessage('비밀번호가 틀렸습니다.');
-          } else {
+          } else if (err.response.status === 500) {
             setErrorMessage('서버에 문제가 있습니다. 잠시 후 시도해주세요.');
+          } else {
+            alert(err);
           }
         });
     }

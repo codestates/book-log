@@ -15,7 +15,7 @@ import ReviewInputPage from './pages/ReviewInputPage';
 import GoogleLoginPage from './pages/GoogleLoginPage';
 
 function App() {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState('');
 
   const [username, setUsername] = useState('guest');
 
@@ -41,11 +41,14 @@ function App() {
   const handleCurrentbook = (book) => {
     setCurrentBook(book);
   };
-
   return (
     <div className="App">
       <Router>
-        <TitleBar username={username} handleLogout={handleLogout} />
+        <TitleBar
+          username={username}
+          handleLogout={handleLogout}
+          isLogin={isLogin}
+        />
         <Routes>
           <Route
             exact
@@ -72,7 +75,16 @@ function App() {
             path="/checkpassword"
             element={<ChkPassPage isLogin={isLogin} />}
           ></Route>
-          <Route exact path="/withdrawal" element={<WithdrawalPage />}></Route>
+          <Route
+            exact
+            path="/withdrawal"
+            element={
+              <WithdrawalPage
+                handleUsername={handleUsername}
+                isLogin={isLogin}
+              />
+            }
+          ></Route>
 
           <Route
             exact
@@ -86,22 +98,30 @@ function App() {
               <BookListPage
                 handleCurrentbook={handleCurrentbook}
                 currentBook={currentBook}
+                isLogin={isLogin}
               />
             }
           ></Route>
           <Route
             exact
             path="/booklist/reviewlist"
-            element={<ReviewListPage currentBook={currentBook} />}
+            element={
+              <ReviewListPage currentBook={currentBook} isLogin={isLogin} />
+            }
           ></Route>
           <Route
             exact
             path="/review/book"
-            element={<SelectBookPage handleBookInfo={handleBookInfo} />}
+            element={
+              <SelectBookPage
+                handleBookInfo={handleBookInfo}
+                isLogin={isLogin}
+              />
+            }
           ></Route>
           <Route
             path="/reviewinput"
-            element={<ReviewInputPage bookInfo={bookInfo} />}
+            element={<ReviewInputPage bookInfo={bookInfo} isLogin={isLogin} />}
           ></Route>
           <Route
             exact
