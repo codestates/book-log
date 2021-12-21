@@ -31,7 +31,6 @@ module.exports = {
     },
     social: (req, res) => {
       let { email, social } = req.body
-      social = generateHash(email + social)
       user.login.social(email, social, (error, result) => {
         if (error) {
           res.status(500).json({ message: 'Server Error' });
@@ -44,7 +43,7 @@ module.exports = {
               sendAccessToken(res, data, accessToken);
           }
           else {
-              res.status(401).json({ message: 'Invalid user or Wrong password' })
+              res.status(401).json({ message: 'Invalid user' })
           }
         }
       });
@@ -81,7 +80,6 @@ module.exports = {
     },
     social: (req, res) => {
       let { email, username, social } = req.body
-      social = generateHash(email + social)
       user.signup.social(email, username, social, (error, result) => {
         if (error) {
           res.status(500).json({ message: 'Server Error' });
@@ -124,7 +122,6 @@ module.exports = {
         }
       }
     })
-
   },
   password: {    
     check: (req, res) => {
@@ -187,5 +184,25 @@ module.exports = {
         }
       })      
     },
+  },
+  social: {
+    check: (req, res) => {
+      const data = isAuthorized(req)
+      if (data === null) {
+        return res.status(401).json({ message: 'Invalid user'})
+      }
+      const email = data.email
+      user.social.check(email, (error, result) => {
+        if (error) {
+          res.status(500).json({ message: 'Server Error' });
+        } else {
+          if (result === 'Social') {
+            res.status(403).json({ message: 'Social' });
+          } else {
+            res.status(200).json({ message: 'General' });
+          }
+        }
+      })  
+    }
   },
 };
