@@ -4,25 +4,22 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import BookInfoBox from '../components/book/BookInfoBox';
 import Modal from '../components/Modal';
+import PageTitle from '../components/PageTitle';
+
 const BeforeLoginModal = styled(Modal)``;
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem 17rem;
+  /* padding: 2rem 17rem;
   height: 100vh;
   margin-top: -0.3rem;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.3); */
 `;
 
 const TitleContainer = styled.div`
   width: 100%;
-`;
-
-const Title = styled.div`
-  font-size: 1.7rem;
-  font-weight: 700;
 `;
 
 const SearchContainer = styled.div`
@@ -31,19 +28,35 @@ const SearchContainer = styled.div`
 `;
 
 const ContentContainer = styled.div`
-  background: rgba(255, 255, 255);
-  border-radius: 1rem;
-  width: 90%;
-  padding: 1rem 2rem;
+  /* background: rgba(255, 255, 255); */
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 40px;
+  width: 60%;
+  height: 50rem;
+  padding: 3rem;
+  margin-top: 2rem;
 `;
 
 const BooksContainer = styled.div`
   width: 100%;
-  background-color: rgb(247, 237, 222, 0.8);
+  background-color: rgb(247, 237, 222, 0.9);
   padding: 0.7rem 1rem;
-  height: 40rem;
+  height: 35rem;
   overflow-y: scroll;
-  border-radius: 3px;
+  border-radius: 0.3rem;
+
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    padding: 1px;
+  }
 `;
 
 const SearchInput = styled.input`
@@ -169,7 +182,7 @@ const SelectBookPage = ({ handleBookInfo, isLogin }) => {
           ) : null}
           <ContentContainer>
             <TitleContainer>
-              <Title>도서 선택</Title>
+              <PageTitle>도서 선택</PageTitle>
             </TitleContainer>
             <SearchContainer>
               <SearchInput
