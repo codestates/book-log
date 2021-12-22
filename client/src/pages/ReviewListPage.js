@@ -30,7 +30,6 @@ const Reviewtitles = styled.div`
   flex-grow: 1;
 `;
 
-
 const ReviewThumbnail = styled.div``;
 export default function ReviewListPage({ currentBook, isLogin, useTitle }) {
   const { state } = useLocation();
@@ -93,7 +92,10 @@ export default function ReviewListPage({ currentBook, isLogin, useTitle }) {
             </Reviewtitles>
           </ReviewListPageContainer>
           <div className="review-createdat">
-            <ReviewList currentReviews={currentReviews} />
+            <ReviewList
+              currentReviews={currentReviews}
+              reviewList={reviewList}
+            />
           </div>
           <div className="alert-box">{errorMessage}</div>
         </ReviewlistBox>
