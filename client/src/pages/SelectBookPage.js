@@ -41,7 +41,7 @@ const BooksContainer = styled.div`
   width: 100%;
   background-color: rgb(247, 237, 222, 0.9);
   padding: 0.7rem 1rem;
-  height: 35rem;
+  height: 32rem;
   overflow-y: scroll;
   border-radius: 0.3rem;
 
