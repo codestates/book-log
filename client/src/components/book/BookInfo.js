@@ -45,7 +45,7 @@ const BookInfo = ({ book }) => {
   const { title, authors, publisher, datetime, contents } = book;
   const thumbnail = book.thumbnail
     ? book.thumbnail
-    : 'https://user-images.githubusercontent.com/89366567/146297427-157c1ece-12f5-4d33-b198-d296275f7981.png';
+    : `https://via.placeholder.com/120x174.png?text=Book+Log`;
   return (
     <BookBox>
       <Cover
