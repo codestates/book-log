@@ -18,7 +18,7 @@ const Content = styled.div`
   margin: auto;
   font-size: 14px;
   text-align: center;
-  
+
   & > * {
     width: 70%;
     margin: 0 auto 10px;
@@ -27,7 +27,7 @@ const Content = styled.div`
 
 const WithdrawalButton = styled.div`
   margin: auto;
-  padding: .5em;
+  padding: 0.5em;
   border-radius: 10px;
   background-color: rgba(228, 150, 127, 1);
   color: white;
@@ -63,7 +63,7 @@ export default function Withdrawal({ handleUsername }) {
             setModal(true);
             // alert('탈퇴 완료하였습니다. Goodbye');
             handleUsername('guest');
-            setTimeout(() => navigate('/'), 2000);
+            setTimeout(() => navigate('/', { replace: true }), 2000);
           }
         })
         .catch((err) => {
@@ -90,7 +90,11 @@ export default function Withdrawal({ handleUsername }) {
             본인 확인을 위해 비밀번호를 <br />
             입력해주세요.
           </div>
-          <input type="password" onChange={handleInputValue('password')} placeholder='비밀번호' />
+          <input
+            type="password"
+            onChange={handleInputValue('password')}
+            placeholder="비밀번호"
+          />
           <WithdrawalButton onClick={requestWithdrawal}>탈퇴</WithdrawalButton>
           <div className="alert-box">{errorMessage}</div>
         </Content>

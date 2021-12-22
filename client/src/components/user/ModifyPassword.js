@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import PageTitle from '../PageTitle';
+import Modal from '../Modal';
+
+const ModifyModal = styled(Modal)``;
 
 const Container = styled.div`
   display: flex;
@@ -13,12 +16,18 @@ const Container = styled.div`
 
 const TitleContainer = styled.div`
   width: 100%;
+`
+
+const PageTitle = styled.div`
+  margin: 0 0 10px;
+  padding: 0.5em;
+  font-size: 30px;
 `;
 
 const ModifyButton = styled.div`
   width: 100%;
   margin: auto;
-  padding: .5em;
+  padding: 0.5em;
   border-radius: 10px;
   background-color: rgba(41, 74, 105, 1);
   color: white;
@@ -54,14 +63,13 @@ const Content = styled.div`
   }
 `;
 
-
-
 export default function ModifyPassword() {
   const [modify, setModify] = useState({
     password: '',
     repassword: '',
   });
   const navigate = useNavigate();
+  const [usermodal, setUserModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const handleInputValue = (key) => (e) => {
     setModify({ ...modify, [key]: e.target.value });
@@ -84,8 +92,8 @@ export default function ModifyPassword() {
       })
         .then((result) => {
           if (result.status === 200) {
-            alert('비밀번호를 변경하였습니다.');
-            navigate('/booklist');
+            setUserModal(true);
+            setTimeout(() => navigate('/booklist', { replace: true }), 1500);
           }
         })
         .catch((err) => {
@@ -100,23 +108,29 @@ export default function ModifyPassword() {
     }
   };
   return (
-    <Container>
-      <ContentContainer>
-        <TitleContainer>
-          <PageTitle>
-            비밀번호 변경
-          </PageTitle>
-        </TitleContainer>
-        <Content>
-          <div>새로운 비밀번호를 입력해주세요.</div>
-          <input type="password" onChange={handleInputValue('password')} placeholder='비밀번호'/><br/>
-          <input type="password" onChange={handleInputValue('repassword')} placeholder='비밀번호 확인'/>
-          <ModifyButton onClick={transferPassword}>
-            변경
-          </ModifyButton>
-          <div className="alert-box">{errorMessage}</div>
-        </Content>
-      </ContentContainer>
-    </Container>
+
+    <>
+      {usermodal ? (
+        <ModifyModal>비밀번호 변경에 성공하였습니다!</ModifyModal>
+      ) : null}
+      <Container>
+        <ContentContainer>
+          <TitleContainer>
+            <PageTitle>
+              비밀번호 변경
+            </PageTitle>
+          </TitleContainer>
+          <Content>
+            <div>새로운 비밀번호를 입력해주세요.</div>
+            <input type="password" onChange={handleInputValue('password')} placeholder='비밀번호'/><br/>
+            <input type="password" onChange={handleInputValue('repassword')} placeholder='비밀번호 확인'/>
+            <ModifyButton onClick={transferPassword}>
+              변경
+            </ModifyButton>
+            <div className="alert-box">{errorMessage}</div>
+          </Content>
+        </ContentContainer>
+      </Container>
+    </>
   );
 }

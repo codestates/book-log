@@ -53,7 +53,7 @@ export default function CheckPassword() {
       })
         .then((result) => {
           if (result.status === 200) {
-            navigate('/modify');
+            navigate('/modify', { replace: true });
           }
         })
         .catch((err) => {
@@ -67,9 +67,15 @@ export default function CheckPassword() {
   };
   return (
     <ContentContainer>
-      <input type="password" onChange={handleInputValue('password')} placeholder="비밀번호" />
+      <input
+        type="password"
+        onChange={handleInputValue('password')}
+        placeholder="비밀번호"
+      />
       <CheckButton onClick={checkhandler}>확인</CheckButton>
-      <div className="alert-box">{errorMessage}</div>
+      <div className="alert-box" style={{ width: '100%' }}>
+        {errorMessage}
+      </div>
     </ContentContainer>
   );
 }

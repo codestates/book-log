@@ -54,9 +54,20 @@ const BookContainer = styled.div`
   margin-top: 2rem;
   overflow-y: scroll;
   height: 35rem;
+  background-color: rgb(247, 237, 222, 0.9);
+  border-radius: 0.3rem;
 
   &::-webkit-scrollbar {
-    width: 5px;
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    padding: 1px;
   }
 `;
 
@@ -64,8 +75,11 @@ const Cover = styled(BookCover)`
   border-radius: 0.3rem;
 `;
 
-export default function BookListPage({ handleCurrentbook, currentBook, isLogin }) {
-
+export default function BookListPage({
+  handleCurrentbook,
+  currentBook,
+  isLogin,
+}) {
   axios.defaults.withCredentials = true;
 
   const [bookList, setBookList] = useState([]); // **
