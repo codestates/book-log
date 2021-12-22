@@ -18,12 +18,6 @@ const TitleContainer = styled.div`
   width: 100%;
 `
 
-const PageTitle = styled.div`
-  margin: 0 0 10px;
-  padding: 0.5em;
-  font-size: 30px;
-`;
-
 const ModifyButton = styled.div`
   width: 100%;
   margin: auto;

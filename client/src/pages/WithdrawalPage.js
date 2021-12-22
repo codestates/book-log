@@ -6,14 +6,19 @@ import axios from 'axios'
 import { useEffect } from 'react';
 const BeforeLoginModal = styled(Modal)``;
 
-const PageContainer = styled.div`
-  width: 500px;
-  height: 500px;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+`;
+
+const ContentContainer = styled.div`
+  background-color: rgba(255, 255, 255, 1);
+  padding: 3rem;
+  margin-top: 2rem;
   border-radius: 40px;
-  margin: auto;
-  padding: 3em;
-  background-color: rgba(255, 255, 255, 0.7);
-  overflow: hidden;
+  width: 60%;
 `;
 
 const PageTitle = styled.div`
@@ -48,10 +53,12 @@ export default function WithdrawalPage({ isLogin }) {
   return (
     <>
       {isLogin ? (
-        <PageContainer>
-          <PageTitle>회원탈퇴</PageTitle>
-          <Withdrawal />
-        </PageContainer>
+        <Container>
+          <ContentContainer>
+            <PageTitle>회원탈퇴</PageTitle>
+            <Withdrawal />
+          </ContentContainer>
+        </Container>
       ) : (
         <BeforeLoginModal>
           <div className="beforeLogin">로그인 후 사용해주세요.</div>

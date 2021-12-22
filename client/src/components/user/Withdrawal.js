@@ -6,10 +6,15 @@ import styled from 'styled-components';
 
 const ContentContainer = styled.div`
   margin: auto;
-  padding: 3em;
-  border-radius: 40px;
-  background-color: rgba(255, 255, 255, 0.9);
-  overflow: hidden;
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & > * {
+    width: 100%;
+    margin: 0 auto 20px;
+  }
 `;
 
 const Content = styled.div`
@@ -26,12 +31,13 @@ const Content = styled.div`
 `;
 
 const WithdrawalButton = styled.div`
-  margin: auto;
-  padding: 0.5em;
+  padding: .5em;
   border-radius: 10px;
   background-color: rgba(228, 150, 127, 1);
   color: white;
   text-align: center;
+  font-weight: 700;
+
 
   &:hover {
     cursor: pointer;
@@ -86,9 +92,9 @@ export default function Withdrawal({ handleUsername }) {
       ) : (
         <Content>
           <div>
-            정말 탈퇴하시겠습니까? <br />
-            본인 확인을 위해 비밀번호를 <br />
-            입력해주세요.
+            <strong>정말 탈퇴하시겠습니까?</strong> <br />
+            본인 확인을 위해 <br />
+            비밀번호를 입력해주세요.
           </div>
           <input
             type="password"
