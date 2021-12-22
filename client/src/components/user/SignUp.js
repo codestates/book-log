@@ -49,6 +49,8 @@ export default function SignUp({ handleUsername }) {
       );
     } else if (!email_check(email)) {
       setErrorMessage('올바른 이메일 형식을 입력해주세요.');
+    } else if (username.length > 10) {
+      setErrorMessage('username은 10글자이내로 입력해야합니다.');
     } else if (password.length < 8 || repassword.length < 8) {
       setErrorMessage('비밀번호는 8글자 이상이어야합니다.');
     } else if (repassword !== password) {
@@ -115,7 +117,7 @@ export default function SignUp({ handleUsername }) {
                 type="text"
                 onChange={handleInputValue('username')}
                 className="inputwidth"
-                placeholder="username"
+                placeholder="username(10글자이내)"
               />
             </div>
             <div className="passwordField">

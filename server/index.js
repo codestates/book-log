@@ -8,7 +8,7 @@ require('dotenv').config();
 
 const scheduler = require('./controllers/mail/cron');
 
-const PORT = process.env.PORT || 80;
+const SERVER_PORT = process.env.SERVER_PORT || 80;
 scheduler();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -24,8 +24,8 @@ app.use(cookieParser());
 
 app.use('/', router);
 
-app.listen(PORT, () => {
-  console.log(`listening on port ${PORT}`);
+app.listen(SERVER_PORT, () => {
+  console.log(`listening on port ${SERVER_PORT}`);
 });
 
 module.exports = app;
