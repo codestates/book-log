@@ -15,12 +15,14 @@ const TitleContainer = styled.div`
   color: white;
 `;
 
-const Logo = styled.div`
+const LogoContent = styled.div`
   align-items: center;
   font-size: 20px;
   font-weight: bold;
   padding: 1rem;
   flex: 7;
+`;
+const Logo = styled.link`
   &:hover {
     cursor: pointer;
   }
@@ -39,7 +41,7 @@ const Bar = styled.div`
 export default function TitleBar({ username, handleLogout, isLogin }) {
   return (
     <TitleContainer>
-      <Logo>
+      <LogoContent>
         {isLogin ? (
           <Link
             to="/booklist"
@@ -52,7 +54,7 @@ export default function TitleBar({ username, handleLogout, isLogin }) {
             BOOK LOG
           </Link>
         )}
-      </Logo>
+      </LogoContent>
       {isLogin ? (
         <>
           <Bar>
@@ -61,7 +63,7 @@ export default function TitleBar({ username, handleLogout, isLogin }) {
               style={{
                 color: 'white',
                 zIndex: 2,
-                textdecoration: 'none',
+                textDecoration: 'none',
               }}
             >
               <h3>
@@ -76,7 +78,7 @@ export default function TitleBar({ username, handleLogout, isLogin }) {
               style={{
                 color: 'white',
                 zIndex: 2,
-                textdecoration: 'none',
+                textDecoration: 'none',
               }}
             >
               <h3>로그아웃</h3>

@@ -17,14 +17,14 @@ const ReviewListPageContainer = styled.div`
   font-size: 14px;
 `;
 
-export default function ReviewListPage({ currentBook, isLogin }) {
+export default function ReviewListPage({ currentBook, isLogin, useTitle }) {
   const { state } = useLocation();
   axios.defaults.withCredentials = true;
   const navigate = useNavigate();
   const bookId = currentBook.book_id || state.book_id;
   console.log(currentBook.book_id);
   console.log(`${process.env.REACT_APP_SERVER_URL}/book/${bookId}/review`);
-
+  useTitle('북로그 감상 목록');
   const [errorMessage, setErrorMessage] = useState('');
   const [reviewList, setReviewList] = useState({});
   const [currentReviews, setCurrentReviews] = useState({
@@ -86,7 +86,9 @@ export default function ReviewListPage({ currentBook, isLogin }) {
       ) : (
         <BeforeLoginModal>
           <div className="beforeLogin">로그인 후 사용해주세요.</div>
-          <button onClick={() => navigate('/')}>로그인 화면으로 이동</button>
+          <button onClick={() => navigate('/')} className="btn">
+            로그인 화면으로 이동
+          </button>
         </BeforeLoginModal>
       )}
     </div>

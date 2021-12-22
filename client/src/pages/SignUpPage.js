@@ -8,6 +8,7 @@ axios.defaults.withCredentials = true;
 
 export default function SignUpPage(props) {
   const { handleUsername } = props;
+  props.useTitle('북로그 회원가입 페이지');
   return (
     <div>
       <SignUp handleUsername={handleUsername} />

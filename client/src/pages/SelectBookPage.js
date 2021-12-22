@@ -113,13 +113,13 @@ const Button = styled.button`
   border: none;
 `;
 
-const SelectBookPage = ({ handleBookInfo, isLogin }) => {
+const SelectBookPage = ({ handleBookInfo, isLogin, useTitle }) => {
   const [bookList, setBookList] = useState([]);
   const [search, setSearch] = useState('');
   const [selectedBook, setSelectedBook] = useState({});
   const [isModal, setIsModal] = useState(false);
   const navigate = useNavigate();
-
+  useTitle('북로그 도서 검색');
   useEffect(() => {
     if (search !== '') {
       searchBook(search);
@@ -219,7 +219,9 @@ const SelectBookPage = ({ handleBookInfo, isLogin }) => {
       ) : (
         <BeforeLoginModal>
           <div className="beforeLogin">로그인 후 사용해주세요.</div>
-          <button onClick={() => navigate('/')}>로그인 화면으로 이동</button>
+          <button onClick={() => navigate('/')} className="btn">
+            로그인 화면으로 이동
+          </button>
         </BeforeLoginModal>
       )}
     </div>

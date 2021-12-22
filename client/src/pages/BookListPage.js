@@ -79,9 +79,10 @@ export default function BookListPage({
   handleCurrentbook,
   currentBook,
   isLogin,
+  useTitle,
 }) {
   axios.defaults.withCredentials = true;
-
+  useTitle('북로그 도서 목록');
   const [bookList, setBookList] = useState([]); // **
   const [errorMessage, setErrorMessage] = useState(''); // **
   const navigate = useNavigate();
@@ -135,7 +136,9 @@ export default function BookListPage({
       ) : (
         <BeforeLoginModal>
           <div className="beforeLogin">로그인 후 사용해주세요.</div>
-          <button onClick={() => navigate('/')}>로그인 화면으로 이동</button>
+          <button onClick={() => navigate('/')} className="btn">
+            로그인 화면으로 이동
+          </button>
         </BeforeLoginModal>
       )}
     </div>

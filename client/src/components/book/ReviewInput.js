@@ -18,17 +18,17 @@ const DateContainer = styled.div`
   height: 5vh;
   font-size: 0.8rem;
 `;
-const WritingContainer = styled.input`
+const WritingContainer = styled.textarea`
   width: 100%;
   height: 15rem;
   font-size: 1rem;
-  text-align: center;
 `;
 const PageInput = styled.div`
   float: right;
 `;
 export default function ReviewInput({ bookInfo }) {
   const today = new Date();
+
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
   const [reviewContent, setReviewContent] = useState({
