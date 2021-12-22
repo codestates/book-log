@@ -63,7 +63,7 @@ export default function ReviewList({ currentReviews, reviewList }) {
   const handleDeleteRequest = () => {
     axios({
       method: 'POST',
-      url: `${process.env.REACT_APP_SERVER_URL}/book/remove/`,
+      url: `${process.env.REACT_APP_SERVER_URL}/book/remove/${currentReviews.reviews[0].review_id}`,
     })
       .then((result) => {
         if (result.status === 200) {

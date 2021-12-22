@@ -39,14 +39,15 @@ export default function ReviewInputPage({ bookInfo, isLogin, useTitle }) {
   let thumbnail = '';
   let contents = '';
   let info = '';
+  let bookId = '';
   if (!state) {
     ({ title, thumbnail, contents } = bookInfo);
   } else {
     ({ title, thumbnail, contents } = state.reviewList.book_data);
     info = state.reviewdata;
+    bookId = state.reviewList.book_data.book_id;
   }
   console.log(state);
-  let bookId = state.reviewList.book_data.book_id;
   useTitle('북로그 감상입력');
   return (
     <ReviewInputPageContainer>
