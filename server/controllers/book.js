@@ -55,9 +55,12 @@ module.exports = {
         if (error) {
           res.status(500).json({ message: 'Server Error' });
         } else {
+          console.log(reviewList);
           const book_data = {
             title: reviewList[0].title,
             thumbnail: reviewList[0].thumbnail,
+            contents: reviewList[0].contents,
+            book_id: reviewList[0].id,
           };
           const temp = {};
           reviewList.forEach((reviewData) => {
