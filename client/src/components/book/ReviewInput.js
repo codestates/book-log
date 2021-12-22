@@ -1,9 +1,32 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 axios.defaults.withCredentials = true;
 
+const ReviewInputContainer = styled.div`
+  background-color: #9fb7cd;
+  border-radius: 10px;
+  height: 25rem;
+  margin: auto;
+  padding: 2rem;
+  margin-top: 1rem;
+`;
+
+const DateContainer = styled.div`
+  height: 5vh;
+  font-size: 0.8rem;
+`;
+const WritingContainer = styled.input`
+  width: 100%;
+  height: 15rem;
+  font-size: 1rem;
+  text-align: center;
+`;
+const PageInput = styled.div`
+  float: right;
+`;
 export default function ReviewInput({ bookInfo }) {
   const today = new Date();
   const navigate = useNavigate();
@@ -15,7 +38,6 @@ export default function ReviewInput({ bookInfo }) {
   const reviewInputValue = (key) => (e) => {
     setReviewContent({ ...reviewContent, [key]: e.target.value });
   };
-  console.log('####', bookInfo);
   const writeReview = () => {
     let regExp = /[^0-9]/g;
     let number = reviewContent.page.replace(regExp, '');
@@ -48,25 +70,34 @@ export default function ReviewInput({ bookInfo }) {
     }
   };
   return (
-    <div>
-      <div className="date-page">
-        <span className="date-time">{today.toLocaleDateString()}</span>
-        <div className="page-input">
-          페이지수:
-          <input type="text" onChange={reviewInputValue('page')} />
-        </div>
-      </div>
-      <div className="review-input-btn">
-        <input
-          type="text"
-          className="review-input"
-          placeholder="책을 읽고 느낌 감상을 자유롭게 남겨주세요."
-          onChange={reviewInputValue('content')}
-        />
-        <button onClick={writeReview}>저장</button>
-      </div>
-
+    <ReviewInputContainer>
+      <DateContainer>
+        <span
+          className="date-time"
+          style={{ fontSize: '1rem', fontWeight: 'bold' }}
+        >
+          {today.toLocaleDateString()}
+        </span>
+        <PageInput>
+          페이지수
+          <input
+            type="text"
+            onChange={reviewInputValue('page')}
+            id="page-input"
+            style={{ width: '7vw' }}
+          />
+        </PageInput>
+      </DateContainer>
+      <WritingContainer
+        type="text"
+        className="review-input"
+        placeholder="책을 읽고 느낌 감상을 자유롭게 남겨주세요."
+        onChange={reviewInputValue('content')}
+      />
+      <button className="btn" onClick={writeReview} style={{ width: '6vw' }}>
+        저장
+      </button>
       <div className="alert-box">{errorMessage}</div>
-    </div>
+    </ReviewInputContainer>
   );
 }
