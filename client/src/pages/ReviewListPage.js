@@ -7,16 +7,30 @@ import styled from 'styled-components';
 import Modal from '../components/Modal';
 const BeforeLoginModal = styled(Modal)``;
 
-const ReviewListPageContainer = styled.div`
+const ReviewlistBox = styled.div`
   background-color: rgba(255, 255, 255, 0.7);
-  width: 500px;
-  height: 500px;
+  width: 60%;
+  height: 60%;
+  border-radius: 40px;
+  margin: 2rem auto 0;
+
+  padding: 3em;
+  font-size: 14px;
+`;
+const ReviewListPageContainer = styled.div`
   border-radius: 40px;
   margin: auto;
   padding: 3em;
   font-size: 14px;
+  display: flex;
 `;
 
+const Reviewtitles = styled.div`
+  margin-left: 50px;
+  flex-grow: 1;
+`;
+
+const ReviewThumbnail = styled.div``;
 export default function ReviewListPage({ currentBook, isLogin }) {
   const { state } = useLocation();
   axios.defaults.withCredentials = true;
@@ -55,34 +69,33 @@ export default function ReviewListPage({ currentBook, isLogin }) {
   useEffect(() => {
     reviewListRequest();
   }, []);
-  console.log(reviewList);
 
   return (
     <div>
       {isLogin ? (
-        <div className="reviewlistBox">
+        <ReviewlistBox>
           <ReviewListPageContainer>
-            <div className="review-book-thumbnail">
+            <ReviewThumbnail>
               <img
-                width="10%"
-                height="10%"
+                width="100%"
+                height="100%"
                 src={
                   reviewList.book_data ? reviewList.book_data.thumbnail : null
                 }
               />
-            </div>
-            <div className="reviewtitles">
+            </ReviewThumbnail>
+            <Reviewtitles>
               <ReviewTitleList
                 reviewList={reviewList}
                 handleCurrentReviews={handleCurrentReviews}
               />
-            </div>
-            <div className="review-createdat">
-              <ReviewList currentReviews={currentReviews} />
-            </div>
-            <div className="alert-box">{errorMessage}</div>
+            </Reviewtitles>
           </ReviewListPageContainer>
-        </div>
+          <div className="review-createdat">
+            <ReviewList currentReviews={currentReviews} />
+          </div>
+          <div className="alert-box">{errorMessage}</div>
+        </ReviewlistBox>
       ) : (
         <BeforeLoginModal>
           <div className="beforeLogin">로그인 후 사용해주세요.</div>
