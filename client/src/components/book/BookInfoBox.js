@@ -14,6 +14,10 @@ const BookBox = styled.div`
   }
 `;
 
+const Info = styled(BookInfo)`
+  width: 50rem;
+`;
+
 const Button = styled.button`
   padding: 0.3rem 0.7rem;
   background-color: #0b3961;
@@ -27,7 +31,7 @@ const Button = styled.button`
 const BookInfoBox = ({ book, clickHandler, idx }) => {
   return (
     <BookBox>
-      <BookInfo book={book}></BookInfo>
+      <Info book={book} />
       <Button onClick={() => clickHandler(idx)}>선택</Button>
     </BookBox>
   );
