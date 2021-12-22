@@ -58,6 +58,8 @@ module.exports = {
           const book_data = {
             title: reviewList[0].title,
             thumbnail: reviewList[0].thumbnail,
+            contents: reviewList[0].contents,
+            book_id: reviewList[0].id,
           };
           const temp = {};
           reviewList.forEach((reviewData) => {

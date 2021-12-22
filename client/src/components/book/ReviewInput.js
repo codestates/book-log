@@ -26,47 +26,72 @@ const WritingContainer = styled.textarea`
 const PageInput = styled.div`
   float: right;
 `;
-export default function ReviewInput({ bookInfo }) {
+export default function ReviewInput({ bookInfo, info, bookId }) {
+  console.log(bookId);
   const today = new Date();
 
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
   const [reviewContent, setReviewContent] = useState({
-    content: '',
-    page: '',
+    content: info ? info.review : '',
+    page: info ? info.page : '',
   });
   const reviewInputValue = (key) => (e) => {
     setReviewContent({ ...reviewContent, [key]: e.target.value });
   };
   const writeReview = () => {
     let regExp = /[^0-9]/g;
-    let number = reviewContent.page.replace(regExp, '');
-    if (reviewContent.page !== number) {
+    let number = String(reviewContent.page).replace(regExp, '');
+    console.log(reviewContent.page);
+    console.log(typeof reviewContent.page);
+    if (String(reviewContent.page) !== number) {
       setErrorMessage('페이지수는 숫자로만 입력해야합니다.');
     } else if (!reviewContent.page || !reviewContent.content) {
       setErrorMessage('페이지수와 감상 내용 모두 입력해야합니다.');
     } else {
-      axios({
-        method: 'POST',
-        url: `${process.env.REACT_APP_SERVER_URL}/book/new`,
-        data: {
-          ...bookInfo,
-          published_at: bookInfo.datetime,
-          author: bookInfo.authors[0],
-          reviewContents: reviewContent.content,
-          page: reviewContent.page,
-        },
-      })
-        .then((result) => {
-          if (result.status === 200) {
-            navigate('/booklist/reviewlist', {
-              state: { book_id: result.data.data.book_id },
-            });
-          }
+      if (info) {
+        axios({
+          method: 'PATCH',
+          url: `${process.env.REACT_APP_SERVER_URL}/book/edit`,
+          data: {
+            review_id: info.review_id,
+            review: reviewContent.content,
+            page: reviewContent.page,
+          },
         })
-        .catch((err) => {
-          setErrorMessage('서버에 문제가 있습니다. 잠시 후 시도해주세요.');
-        });
+          .then((result) => {
+            if (result.status === 200) {
+              navigate('/booklist/reviewlist', {
+                state: { book_id: bookId },
+              });
+            }
+          })
+          .catch((err) => {
+            setErrorMessage('서버에 문제가 있습니다. 잠시 후 시도해주세요.');
+          });
+      } else {
+        axios({
+          method: 'POST',
+          url: `${process.env.REACT_APP_SERVER_URL}/book/new`,
+          data: {
+            ...bookInfo,
+            published_at: bookInfo.datetime,
+            author: bookInfo.authors[0],
+            reviewContents: reviewContent.content,
+            page: reviewContent.page,
+          },
+        })
+          .then((result) => {
+            if (result.status === 200) {
+              navigate('/booklist/reviewlist', {
+                state: { book_id: result.data.data.book_id },
+              });
+            }
+          })
+          .catch((err) => {
+            setErrorMessage('서버에 문제가 있습니다. 잠시 후 시도해주세요.');
+          });
+      }
     }
   };
   return (
@@ -85,6 +110,7 @@ export default function ReviewInput({ bookInfo }) {
             onChange={reviewInputValue('page')}
             id="page-input"
             style={{ width: '7vw' }}
+            value={reviewContent.page}
           />
         </PageInput>
       </DateContainer>
@@ -93,7 +119,9 @@ export default function ReviewInput({ bookInfo }) {
         className="review-input"
         placeholder="책을 읽고 느낌 감상을 자유롭게 남겨주세요."
         onChange={reviewInputValue('content')}
-      />
+      >
+        {reviewContent.content}
+      </WritingContainer>
       <button className="btn" onClick={writeReview} style={{ width: '6vw' }}>
         저장
       </button>

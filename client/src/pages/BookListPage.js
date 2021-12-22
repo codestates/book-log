@@ -120,12 +120,14 @@ export default function BookListPage({
           <BookContainer className="book-list">
             {bookList.length !== 0 ? (
               bookList.map((book) => (
-                <Cover
-                  key={book.book_id}
-                  book={book}
-                  handleCurrentbook={handleCurrentbook}
-                  currentBook={currentBook}
-                />
+                <Link to="/booklist/reviewlist">
+                  <Cover
+                    key={book.book_id}
+                    book={book}
+                    handleCurrentbook={handleCurrentbook}
+                    currentBook={currentBook}
+                  />
+                </Link>
               ))
             ) : (
               <NoBook>저장한 도서가 없습니다. 도서를 추가해주세요.</NoBook>

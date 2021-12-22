@@ -1,8 +1,9 @@
 import ReviewInput from '../components/book/ReviewInput';
 import styled from 'styled-components';
 import Modal from '../components/Modal';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import PageTitle from '../components/PageTitle';
+
 const BeforeLoginModal = styled(Modal)``;
 const ReviewInputPageContainer = styled.div`
   display: flex;
@@ -31,8 +32,21 @@ const Thumbnail = styled.span`
 `;
 
 export default function ReviewInputPage({ bookInfo, isLogin, useTitle }) {
-  const { title, thumbnail, contents } = bookInfo;
+  const { state } = useLocation();
   const navigate = useNavigate();
+
+  let title = '';
+  let thumbnail = '';
+  let contents = '';
+  let info = '';
+  if (!state) {
+    ({ title, thumbnail, contents } = bookInfo);
+  } else {
+    ({ title, thumbnail, contents } = state.reviewList.book_data);
+    info = state.reviewdata;
+  }
+  console.log(state);
+  let bookId = state.reviewList.book_data.book_id;
   useTitle('북로그 감상입력');
   return (
     <ReviewInputPageContainer>
@@ -54,7 +68,7 @@ export default function ReviewInputPage({ bookInfo, isLogin, useTitle }) {
                   : contents}
               </div>
             </BookInfoContent>
-            <ReviewInput bookInfo={bookInfo} />
+            <ReviewInput bookId={bookId} info={info} bookInfo={bookInfo} />
           </BookInfoContainer>
         </div>
       ) : (

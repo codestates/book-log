@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
+import { useNavigate } from 'react-router';
+import axios from 'axios';
 const CurrentreviewPage = styled.div`
   display: flex;
   justify-content: space-between;
@@ -40,13 +41,38 @@ const Delete = styled.div`
   font-weight: bold;
   margin-left: 13px;
 `;
-export default function ReviewList({ currentReviews }) {
+export default function ReviewList({ currentReviews, reviewList }) {
   const [selectDate, setSelectDate] = useState({});
+  const [errorMessage, setErrorMessage] = useState('');
+
+  console.log(currentReviews);
 
   const handleSelectDate = (input) => {
     setSelectDate(input);
   };
+  const navigate = useNavigate();
 
+  const handleModifyReview = () => {
+    navigate('/reviewinput', {
+      state: {
+        reviewList,
+        reviewdata: { ...selectDate, page: currentReviews.page },
+      },
+    });
+  };
+  const handleDeleteRequest = () => {
+    axios({
+      method: 'POST',
+      url: `${process.env.REACT_APP_SERVER_URL}/book/remove/`,
+    })
+      .then((result) => {
+        if (result.status === 200) {
+        }
+      })
+      .catch((err) => {
+        setErrorMessage('서버에 문제가 있습니다. 잠시 후 시도해주세요.');
+      });
+  };
   return (
     <div className="current-review">
       <CurrentreviewPage>
@@ -64,9 +90,10 @@ export default function ReviewList({ currentReviews }) {
       <ShowreivewContent>
         <ReviewContent>{selectDate.review}</ReviewContent>
         <Buttons>
-          <Modify>수정</Modify>
-          <Delete>삭제</Delete>
+          <Modify onClick={() => handleModifyReview()}>수정</Modify>
+          <Delete onClick={() => handleDeleteRequest()}>삭제</Delete>
         </Buttons>
+        <div>{errorMessage}</div>
       </ShowreivewContent>
     </div>
   );
