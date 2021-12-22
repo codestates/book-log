@@ -4,7 +4,7 @@ module.exports = {
   login: {
     general: (email, password, callback) => {
       const queryString = `
-              SELECT id, username, email FROM user
+              SELECT id, username, email, social FROM user
               WHERE email = "${email}" AND password = "${password}"
           `;
       db.query(queryString, (error, result) => {
@@ -14,7 +14,7 @@ module.exports = {
     },
     social: (email, social, callback) => {
       const queryString = `
-              SELECT id, username, email FROM user
+              SELECT id, username, email, social FROM user
               WHERE email = "${email}" AND social = "${social}"
           `;
       db.query(queryString, (error, result) => {
@@ -78,8 +78,6 @@ module.exports = {
   `;
   db.query(queryString, (error, result) => {
     if (error) throw error;
-    console.log(result)
-    console.log(password)
     if (result[0].password !== password) {
       callback(error, 'Wrong password')
     } else {
@@ -144,6 +142,22 @@ module.exports = {
           callback(error, 'ok')
         } else {
           callback(error, 'Duplicated Email')
+        }
+      })
+    },
+  },
+  social: {
+    check: (email, callback) => {
+      const queryString = `
+        SELECT * FROM user
+        WHERE email = "${email}"
+      `
+      db.query(queryString, (error, result) => {
+        if (error) throw error;
+        if (result[0].social === null) {
+          callback(error, 'General')
+        } else {
+          callback(error, 'Social')
         }
       })
     },

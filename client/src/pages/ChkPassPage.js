@@ -1,52 +1,70 @@
 import CheckPassword from '../components/user/CheckPassword';
 import styled from 'styled-components';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import Modal from '../components/Modal';
+import axios from 'axios'
+import PageTitle from '../components/PageTitle';
 
 const BeforeLoginModal = styled(Modal)``;
 
-const PageContainer = styled.div`
-  width: 500px;
-  height: 500px;
-  border-radius: 40px;
-  margin: auto;
-  padding: 3em;
-  background-color: rgba(255, 255, 255, 0.7);
-  overflow: hidden;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
 `;
 
-const PageTitle = styled.div`
-  margin: 0 0 10px;
-  padding: .5em;
-  font-size: 30px;
+const TitleContainer = styled.div`
+  width: 100%;
 `;
 
 const ContentContainer = styled.div`
-  margin: auto;
-  padding: 3em;
-  display: flex;
-  align-items: center;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 3rem;
+  margin-top: 2rem;
   border-radius: 40px;
-  background-color: rgba(255, 255, 255, 0.9);
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Content = styled.div`
-  max-width: 360px;
-  height: 180px;
-  margin: auto;
-  font-size: 14px;
-  text-align: center;
+  margin-top: 3.5rem;
 `;
 
 export default function ChkPassPage({ isLogin }) {
   const navigate = useNavigate();
+
+  const checkSocialRequest = () => {
+    axios({
+      method: 'POST',
+      url: `${process.env.REACT_APP_SERVER_URL}/user/social/check`,
+    })
+      .catch((err) => {
+        if (err.response.status === 500) {
+          alert('서버에 문제가 있습니다. 잠시 후 시도해주세요.');
+        } else {
+          alert('구글 로그인 사용자는 이 기능을 이용하실 수 없습니다.');
+        }
+        navigate('/booklist')
+      });
+  };
+
+  useEffect(() => {
+    checkSocialRequest()
+  }, [])
+
   return (
-    <PageContainer>
-      <PageTitle>
-        비밀번호 변경
-      </PageTitle>
+    <Container>
       {isLogin ? (
         <ContentContainer>
+          <TitleContainer>
+            <PageTitle>
+              비밀번호 변경
+            </PageTitle>
+          </TitleContainer>
           <Content>
             본인 확인을 위해 비밀번호를 입력해주세요.
           <CheckPassword />
@@ -58,6 +76,6 @@ export default function ChkPassPage({ isLogin }) {
           <button onClick={() => navigate('/')}>로그인 화면으로 이동</button>
         </BeforeLoginModal>
       )}
-    </PageContainer>
+    </Container>
   );
 }

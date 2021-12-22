@@ -4,23 +4,26 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 const ContentContainer = styled.div`
-  margin: 12px auto;
+  margin: auto;
+  padding: 2em;
   display: flex;
   flex-direction: column;
+  align-items: center;
 
-  & * {
-    width: 70%;
-    margin: 10px auto;
+  & > * {
+    width: 100%;
+    margin: 0 auto 20px;
   }
 `;
 
 const CheckButton = styled.div`
-  margin: auto;
-  padding: 0.5em;
+  padding: .5em;
   border-radius: 10px;
-  background-color: rgba(228, 150, 127, 1);
+  background-color: rgba(41, 74, 105, 1);
   color: white;
   text-align: center;
+  font-weight: 700;
+
 
   &:hover {
     cursor: pointer;

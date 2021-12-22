@@ -8,12 +8,10 @@ const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: 40px;
-  background-color: rgba(255, 255, 255, 0.9);
 
   & > div {
-    width: 70%;
-    margin: 0 auto 10px;
+    width: 80%;
+    margin: 0 auto 20px;
   }
 `;
 
@@ -24,6 +22,7 @@ const CheckpasswordLinkButton = styled.div`
   background-color: rgba(41, 74, 105, 1);
   color: white;
   text-align: center;
+  font-weight: 700;
 
   &:hover {
     cursor: pointer;
@@ -37,6 +36,7 @@ const WithdrawalLinkButton = styled.div`
   background-color: rgba(228, 150, 127, 1);
   color: white;
   text-align: center;
+  font-weight: 700;
 
   &:hover {
     cursor: pointer;

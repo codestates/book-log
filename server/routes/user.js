@@ -28,4 +28,7 @@ router.patch('/password/new', user.password.new)
 // 이메일 중복 확인
 router.post('/email/check', user.email.check)
 
+// 소셜 로그인 확인
+router.post('/social/check', user.social.check)
+
 module.exports = router;

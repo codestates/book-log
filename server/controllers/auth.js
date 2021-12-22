@@ -29,10 +29,10 @@ const makeResponse = async (res, data) => {
     .split(';')[0]
     .split('=')[1];
   res.cookie('accessToken', accessToken, {
-    domain: 'localhost',
+    // domain: 'localhost',
     path: '/',
     maxAge: 24 * 60 * 60 * 1000,
-    sameSite: 'none',
+    // sameSite: 'none',
     // secure: true,
     httpOnly: true,
   });
