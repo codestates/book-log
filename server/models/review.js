@@ -112,16 +112,20 @@ module.exports = {
       }
     });
   },
-  edit: (review_id, review_content, callback) => {
+  edit: (review_id, review_content, page, callback) => {
     const updateQuery = `
-      UPDATE review 
-      SET contents = ?, modified_at = curdate()
+      UPDATE review
+      SET contents = ?, modified_at = curdate(), page = ?
       WHERE id = ?
     `;
-    db.query(updateQuery, [review_content, review_id], (error, result) => {
-      if (error) throw error;
-      callback(error, result);
-    });
+    db.query(
+      updateQuery,
+      [review_content, review_id, page],
+      (error, result) => {
+        if (error) throw error;
+        callback(error, result);
+      }
+    );
   },
   remove: (reviewId, callback) => {
     const queryString = `
