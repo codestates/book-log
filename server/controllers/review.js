@@ -45,8 +45,8 @@ module.exports = {
     if (!data) {
       res.json({ message: 'Invalid user' });
     } else {
-      const { review_id, review: reviewContent } = req.body;
-      review.edit(review_id, reviewContent, (error, result) => {
+      const { review_id, review: reviewContent, page } = req.body;
+      review.edit(review_id, reviewContent, page, (error, result) => {
         if (error || result.changeRows === 0) {
           res.status(500).json({ message: 'Server Error' });
         }
