@@ -30,10 +30,10 @@ const Thumbnail = styled.span`
   padding: 1rem;
 `;
 
-export default function ReviewInputPage({ bookInfo, isLogin }) {
+export default function ReviewInputPage({ bookInfo, isLogin, useTitle }) {
   const { title, thumbnail, contents } = bookInfo;
-  console.log('@@@', bookInfo);
   const navigate = useNavigate();
+  useTitle('북로그 감상입력');
   return (
     <ReviewInputPageContainer>
       {isLogin ? (
@@ -51,7 +51,7 @@ export default function ReviewInputPage({ bookInfo, isLogin }) {
                   ? '책에 대한 설명이 없습니다.'
                   : contents.length > 160
                   ? contents.slice(0, 160) + '...'
-                  : contents.length}
+                  : contents}
               </div>
             </BookInfoContent>
             <ReviewInput bookInfo={bookInfo} />
@@ -60,7 +60,9 @@ export default function ReviewInputPage({ bookInfo, isLogin }) {
       ) : (
         <BeforeLoginModal>
           <div className="beforeLogin">로그인 후 사용해주세요.</div>
-          <button onClick={() => navigate('/')}>로그인 화면으로 이동</button>
+          <button onClick={() => navigate('/')} className="btn">
+            로그인 화면으로 이동
+          </button>
         </BeforeLoginModal>
       )}
     </ReviewInputPageContainer>

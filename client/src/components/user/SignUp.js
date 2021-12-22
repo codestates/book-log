@@ -91,7 +91,9 @@ export default function SignUp({ handleUsername }) {
           <br />
           <div> 잠시후 로그인 페이지로 이동합니다...</div>
           <br />
-          <button onClick={() => navigate('/')}>로그인 화면 으로 이동</button>
+          <button onClick={() => navigate('/')} className="btn">
+            로그인 화면 으로 이동
+          </button>
         </SignUpModal>
       ) : null}
       <SignUpContainer>

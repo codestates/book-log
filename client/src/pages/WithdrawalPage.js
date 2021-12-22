@@ -2,7 +2,7 @@ import Withdrawal from '../components/user/Withdrawal';
 import styled from 'styled-components';
 import Modal from '../components/Modal';
 import { useNavigate } from 'react-router';
-import axios from 'axios'
+import axios from 'axios';
 import { useEffect } from 'react';
 const BeforeLoginModal = styled(Modal)``;
 
@@ -28,27 +28,27 @@ const PageTitle = styled.div`
   margin: 0 0 10px;
 `;
 
-export default function WithdrawalPage({ isLogin }) {
+export default function WithdrawalPage(props) {
   const navigate = useNavigate();
-
+  const { isLogin } = props;
+  props.useTitle('북로그 탈퇴 페이지');
   const checkSocialRequest = () => {
     axios({
       method: 'POST',
       url: `${process.env.REACT_APP_SERVER_URL}/user/social/check`,
-    })
-      .catch((err) => {
-        if (err.response.status === 500) {
-          alert('서버에 문제가 있습니다. 잠시 후 시도해주세요.');
-        } else {
-          alert('구글 로그인 사용자는 이 기능을 이용하실 수 없습니다.');
-        }
-        navigate('/booklist')
-      });
+    }).catch((err) => {
+      if (err.response.status === 500) {
+        alert('서버에 문제가 있습니다. 잠시 후 시도해주세요.');
+      } else {
+        alert('구글 로그인 사용자는 이 기능을 이용하실 수 없습니다.');
+      }
+      navigate('/booklist');
+    });
   };
 
   useEffect(() => {
-    checkSocialRequest()
-  }, [])
+    checkSocialRequest();
+  }, []);
 
   return (
     <>
@@ -62,7 +62,10 @@ export default function WithdrawalPage({ isLogin }) {
       ) : (
         <BeforeLoginModal>
           <div className="beforeLogin">로그인 후 사용해주세요.</div>
-          <button onClick={() => navigate('/', { replace: true })}>
+          <button
+            onClick={() => navigate('/', { replace: true })}
+            className="btn"
+          >
             로그인 화면으로 이동
           </button>
         </BeforeLoginModal>

@@ -21,6 +21,15 @@ function App() {
 
   const [bookInfo, setBookInfo] = useState({});
 
+  const useTitle = () => {
+    const [title, setTitle] = useState('북로그');
+    const updateTitle = () => {
+      const htmlTitle = document.querySelector('title');
+      htmlTitle.innerText = title;
+    };
+    useEffect(updateTitle, [title]);
+    return setTitle;
+  };
   const handleLogin = () => {
     setIsLogin(true);
   };
@@ -57,23 +66,29 @@ function App() {
               <MainPage
                 handleLogin={handleLogin}
                 handleUsername={handleUsername}
+                useTitle={useTitle()}
               />
             }
           ></Route>
           <Route
             exact
             path="/signup"
-            element={<SignUpPage handleUsername={handleUsername} />}
+            element={
+              <SignUpPage
+                handleUsername={handleUsername}
+                useTitle={useTitle()}
+              />
+            }
           ></Route>
           <Route
             exact
             path="/mypage"
-            element={<MainMyPage isLogin={isLogin} />}
+            element={<MainMyPage isLogin={isLogin} useTitle={useTitle()} />}
           ></Route>
           <Route
             exact
             path="/checkpassword"
-            element={<ChkPassPage isLogin={isLogin} />}
+            element={<ChkPassPage isLogin={isLogin} useTitle={useTitle()} />}
           ></Route>
           <Route
             exact
@@ -82,6 +97,7 @@ function App() {
               <WithdrawalPage
                 handleUsername={handleUsername}
                 isLogin={isLogin}
+                useTitle={useTitle()}
               />
             }
           ></Route>
@@ -89,7 +105,7 @@ function App() {
           <Route
             exact
             path="/modify"
-            element={<MdfPassPage isLogin={isLogin} />}
+            element={<MdfPassPage isLogin={isLogin} useTitle={useTitle()} />}
           ></Route>
           <Route
             exact
@@ -99,6 +115,7 @@ function App() {
                 handleCurrentbook={handleCurrentbook}
                 currentBook={currentBook}
                 isLogin={isLogin}
+                useTitle={useTitle()}
               />
             }
           ></Route>
@@ -106,7 +123,11 @@ function App() {
             exact
             path="/booklist/reviewlist"
             element={
-              <ReviewListPage currentBook={currentBook} isLogin={isLogin} />
+              <ReviewListPage
+                currentBook={currentBook}
+                isLogin={isLogin}
+                useTitle={useTitle()}
+              />
             }
           ></Route>
           <Route
@@ -116,12 +137,19 @@ function App() {
               <SelectBookPage
                 handleBookInfo={handleBookInfo}
                 isLogin={isLogin}
+                useTitle={useTitle()}
               />
             }
           ></Route>
           <Route
             path="/reviewinput"
-            element={<ReviewInputPage bookInfo={bookInfo} isLogin={isLogin} />}
+            element={
+              <ReviewInputPage
+                bookInfo={bookInfo}
+                isLogin={isLogin}
+                useTitle={useTitle()}
+              />
+            }
           ></Route>
           <Route
             exact
@@ -130,6 +158,7 @@ function App() {
               <GoogleLoginPage
                 handleLogin={handleLogin}
                 handleUsername={handleUsername}
+                useTitle={useTitle()}
               />
             }
           ></Route>
