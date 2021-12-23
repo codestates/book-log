@@ -23,8 +23,12 @@ const authURL = oauth2Client.generateAuthUrl({
 const makeResponse = async (res, data) => {
   const login = await axios.post(
     `${process.env.SERVER_DOMAIN}:${SERVER_PORT}/user/login/social`,
-    data
-  );
+    { ...data },
+  )
+  //   .catch(err => {
+  //     console.log(err)
+  //   })
+  // console.log(login, data)
   const accessToken = login.headers['set-cookie'][0]
     .split(';')[0]
     .split('=')[1];
@@ -60,7 +64,7 @@ module.exports = {
         social: 'google',
       };
       axios
-        .post(`${process.env.DOMAIN}:${SERVER_PORT}/user/signup/social`, data)
+        .post(`${process.env.SERVER_DOMAIN}:${SERVER_PORT}/user/signup/social`, data)
         .then((response) => {
           console.log('회원가입 성공');
           makeResponse(res, data);
