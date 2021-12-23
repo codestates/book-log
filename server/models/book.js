@@ -24,4 +24,11 @@ module.exports = {
       callback(err, reviewList);
     });
   },
+  bookData: (book_id, callback) => {
+    const query = `SELECT title, thumbnail, contents FROM book WHERE id = ?`;
+    db.query(query, [book_id], (err, result) => {
+      if (err) throw err;
+      callback(err, result);
+    });
+  },
 };

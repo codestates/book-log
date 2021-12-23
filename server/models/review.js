@@ -127,14 +127,40 @@ module.exports = {
       }
     );
   },
-  remove: (reviewId, callback) => {
-    const queryString = `
-      DELETE FROM review WHERE id = ?
-    `;
-    db.query(queryString, [reviewId], (error, result) => {
+  remove: (reviewId, userId, callback) => {
+    const bookIdQuery = `SELECT book_id FROM review WHERE id = ? AND user_id = ?`;
+    db.query(bookIdQuery, [reviewId, userId], (error, bookId) => {
       if (error) throw error;
+      console.log(reviewId, bookId);
+      const { book_id } = bookId[0];
+      console.log('book_id', book_id);
+      const selectQuery = `SELECT book_id, count(book_id) count FROM review WHERE book_id = ? AND user_id = ? GROUP BY book_id`;
+      db.query(selectQuery, [book_id, userId], (error, result) => {
+        if (error) throw error;
 
-      callback(error, result);
+        const { count } = result[0];
+        if (count === 1) {
+          const deleteQuery = `DELETE FROM user_book WHERE book_id = ?`;
+          db.query(deleteQuery, [book_id], (error, result) => {
+            if (error) throw error;
+            const queryString = `
+              DELETE FROM review WHERE id = ?
+            `;
+            db.query(queryString, [reviewId], (error, result) => {
+              if (error) throw error;
+              callback(error, result);
+            });
+          });
+        } else {
+          const queryString = `
+          DELETE FROM review WHERE id = ?
+          `;
+          db.query(queryString, [reviewId], (error, result) => {
+            if (error) throw error;
+            callback(error, result);
+          });
+        }
+      });
     });
   },
 };

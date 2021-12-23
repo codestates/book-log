@@ -60,7 +60,7 @@ module.exports = {
       res.status(500).json({ message: 'Server Error' });
     } else {
       const { review_id } = req.params;
-      review.remove(review_id, (error, result) => {
+      review.remove(review_id, data.id, (error, result) => {
         if (error) {
           res.status(500).json({ message: 'Server Error' });
         }
