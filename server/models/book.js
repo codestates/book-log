@@ -14,7 +14,7 @@ module.exports = {
   },
   reviews: (userId, bookId, callback) => {
     const queryString = `
-      SELECT b.title, b.thumbnail, b.contents, b.author, b.id, r.id review_id, r.page, r.created_at, r.contents review
+      SELECT b.title, b.thumbnail, b.contents, b.isbn, b.author, b.id, b.published_at, b.publisher, b.url, r.id review_id, r.page, r.created_at, r.contents review
       FROM review r
       JOIN book b ON b.id = r.book_id
       WHERE r.user_id = ? AND r.book_id = ?

@@ -38,13 +38,13 @@ export default function ReviewInputPage({ bookInfo, isLogin, useTitle }) {
   let title = '';
   let thumbnail = '';
   let contents = '';
-  let reviewContent = '';
+  let reviewContent = {};
   let book_id = '';
   if (!state) {
     ({ title, thumbnail, contents } = bookInfo);
   } else {
     ({ title, thumbnail, contents, book_id } = state.bookInfo);
-    reviewContent = state.reviewContent;
+    reviewContent = state.reviewContent ? state.reviewContent : {};
   }
   useTitle('북로그 감상입력');
   return (

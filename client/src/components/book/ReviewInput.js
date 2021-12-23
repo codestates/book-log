@@ -38,6 +38,7 @@ export default function ReviewInput({ bookInfo, info, bookId }) {
   const reviewInputValue = (key) => (e) => {
     setReviewContent({ ...reviewContent, [key]: e.target.value });
   };
+  console.log(bookInfo, info);
   const writeReview = () => {
     let regExp = /[^0-9]/g;
     let number = String(reviewContent.page).replace(regExp, '');
@@ -46,7 +47,8 @@ export default function ReviewInput({ bookInfo, info, bookId }) {
     } else if (!reviewContent.page || !reviewContent.content) {
       setErrorMessage('페이지수와 감상 내용 모두 입력해야합니다.');
     } else {
-      if (info) {
+      if (Object.values(info).length !== 0) {
+        console.log(Object.values(info).length);
         axios({
           method: 'PATCH',
           url: `${process.env.REACT_APP_SERVER_URL}/book/edit`,
@@ -58,6 +60,7 @@ export default function ReviewInput({ bookInfo, info, bookId }) {
         })
           .then((result) => {
             if (result.status === 200) {
+              console.log('책 수정', bookId);
               navigate('/booklist/reviewlist', {
                 state: { book_id: bookId },
               });
@@ -72,7 +75,8 @@ export default function ReviewInput({ bookInfo, info, bookId }) {
           url: `${process.env.REACT_APP_SERVER_URL}/book/new`,
           data: {
             ...bookInfo,
-            published_at: bookInfo.datetime,
+            published_at:
+              bookInfo.datetime || bookInfo.published_at.slice(0, 10),
             author: bookInfo.authors[0],
             reviewContents: reviewContent.content,
             page: reviewContent.page,
@@ -80,6 +84,7 @@ export default function ReviewInput({ bookInfo, info, bookId }) {
         })
           .then((result) => {
             if (result.status === 200) {
+              console.log('책 저장', result.data.data.book_id);
               navigate('/booklist/reviewlist', {
                 state: { book_id: result.data.data.book_id },
               });

@@ -21,6 +21,8 @@ function App() {
 
   const [bookInfo, setBookInfo] = useState({});
 
+  const [currentBook, setCurrentBook] = useState({});
+
   const useTitle = () => {
     const [title, setTitle] = useState('북로그');
     const updateTitle = () => {
@@ -45,11 +47,10 @@ function App() {
     setBookInfo(book);
   };
 
-  const [currentBook, setCurrentBook] = useState({});
-
   const handleCurrentbook = (book) => {
     setCurrentBook(book);
   };
+
   return (
     <div className="App">
       <Router>
