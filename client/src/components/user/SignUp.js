@@ -13,11 +13,15 @@ const SignUpContainer = styled.div`
   height: 60vh;
   border-radius: 40px;
   margin: 3rem auto;
-  padding: 1rem;
+  padding: 1rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
+  & > div {
+    width: 70%;
+    margin: 0 auto 10px;
+  }
 `;
 export default function SignUp({ handleUsername }) {
   const [signupInfo, setSignUpInfo] = useState({
@@ -32,13 +36,21 @@ export default function SignUp({ handleUsername }) {
     setSignUpInfo({ ...signupInfo, [key]: e.target.value });
   };
   const navigate = useNavigate();
-
+  function email_check(str) {
+    let reg =
+      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    return reg.test(str);
+  }
   const handleSignUp = () => {
     const { email, username, password, repassword } = signupInfo;
     if (!email || !username || !password || !repassword) {
       setErrorMessage(
         '이메일, username, 2번의 비밀번호 모두 다 입력해야합니다.'
       );
+    } else if (!email_check(email)) {
+      setErrorMessage('올바른 이메일 형식을 입력해주세요.');
+    } else if (username.length > 10) {
+      setErrorMessage('username은 10글자이내로 입력해야합니다.');
     } else if (password.length < 8 || repassword.length < 8) {
       setErrorMessage('비밀번호는 8글자 이상이어야합니다.');
     } else if (repassword !== password) {
@@ -58,7 +70,7 @@ export default function SignUp({ handleUsername }) {
             setUserModal(true);
             const username = result.data.data.userInfo.username;
             // handleUsername(username); 다시 로그인해야하므로 username 변경 안해도 됨
-            setTimeout(() => navigate('/'), 3000);
+            setTimeout(() => navigate('/', { replace: true }), 3000);
           }
         })
         .catch((err) => {
@@ -71,7 +83,7 @@ export default function SignUp({ handleUsername }) {
     }
   };
   return (
-    <SignUpContainer>
+    <>
       {usermodal ? (
         <SignUpModal>
           <br />
@@ -81,56 +93,56 @@ export default function SignUp({ handleUsername }) {
           <br />
           <div> 잠시후 로그인 페이지로 이동합니다...</div>
           <br />
-          <button onClick={() => navigate('/')}>로그인 화면 으로 이동</button>
+          <button onClick={() => navigate('/')} className="btn">
+            로그인 화면 으로 이동
+          </button>
         </SignUpModal>
       ) : null}
-      <center>
-        <h2 id="signup-title">
-          사용할 이메일, username, 비밀번호를 입력해주세요{' '}
-        </h2>
-        <form onSubmit={(e) => e.preventDefault()}>
-          <div className="inputField">
-            <div>Email </div>
-            <input
-              type="email"
-              onChange={handleInputValue('email')}
-              className="inputwidth"
-            />
-          </div>
-          <div className="inputField">
-            <div> username </div>
-            <input
-              type="text"
-              onChange={handleInputValue('username')}
-              className="inputwidth"
-            />
-          </div>
-          <div className="passwordField">
-            <div>비밀번호 </div>
-            <input
-              type="password"
-              onChange={handleInputValue('password')}
-              className="inputwidth"
-            />
-          </div>
-          <div className="passwordField">
-            <div>비밀번호 확인</div>
-            <input
-              type="password"
-              onChange={handleInputValue('repassword')}
-              className="inputwidth"
-            />
-          </div>
-          <button
-            className="btn btn-signup"
-            type="submit"
-            onClick={handleSignUp}
-          >
-            SignUp
-          </button>
-          <div className="alert-box">{errorMessage}</div>
-        </form>
-      </center>
-    </SignUpContainer>
+      <SignUpContainer>
+        <center>
+          <h2 id="signup-title">
+            사용할 이메일, username, 비밀번호를 입력해주세요{' '}
+          </h2>
+          <form onSubmit={(e) => e.preventDefault()}>
+            <div className="inputField">
+              <input
+                type="email"
+                onChange={handleInputValue('email')}
+                className="inputwidth"
+                placeholder="이메일"
+              />
+            </div>
+            <div className="inputField">
+              <input
+                type="text"
+                onChange={handleInputValue('username')}
+                className="inputwidth"
+                placeholder="username(10글자이내)"
+              />
+            </div>
+            <div className="passwordField">
+              <input
+                type="password"
+                onChange={handleInputValue('password')}
+                className="inputwidth"
+                placeholder="비밀번호"
+              />
+            </div>
+            <div className="passwordField">
+              <input
+                type="password"
+                onChange={handleInputValue('repassword')}
+                className="inputwidth"
+                placeholder="비밀번호 확인"
+              />
+            </div>
+            <div className="btn" type="submit" onClick={handleSignUp}>
+              SignUp
+            </div>
+            <div className="alert-box">{errorMessage}</div>
+          </form>
+        </center>
+      </SignUpContainer>
+    </>
   );
 }

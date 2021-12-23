@@ -4,23 +4,26 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 const ContentContainer = styled.div`
-  margin: 12px auto;
+  margin: auto;
+  padding: 2em;
   display: flex;
   flex-direction: column;
+  align-items: center;
 
-  & * {
-    width: 70%;
-    margin: 10px auto;
+  & > * {
+    width: 100%;
+    margin: 0 auto 20px;
   }
 `;
 
 const CheckButton = styled.div`
-  margin: auto;
   padding: .5em;
   border-radius: 10px;
-  background-color: rgba(228, 150, 127, 1);
+  background-color: rgba(41, 74, 105, 1);
   color: white;
   text-align: center;
+  font-weight: 700;
+
 
   &:hover {
     cursor: pointer;
@@ -50,7 +53,7 @@ export default function CheckPassword() {
       })
         .then((result) => {
           if (result.status === 200) {
-            navigate('/modify');
+            navigate('/modify', { replace: true });
           }
         })
         .catch((err) => {
@@ -64,9 +67,15 @@ export default function CheckPassword() {
   };
   return (
     <ContentContainer>
-      <input type="password" onChange={handleInputValue('password')} placeholder="비밀번호" />
+      <input
+        type="password"
+        onChange={handleInputValue('password')}
+        placeholder="비밀번호"
+      />
       <CheckButton onClick={checkhandler}>확인</CheckButton>
-      <div className="alert-box">{errorMessage}</div>
+      <div className="alert-box" style={{ width: '100%' }}>
+        {errorMessage}
+      </div>
     </ContentContainer>
   );
 }

@@ -37,6 +37,7 @@ module.exports = {
         if (error) {
           res.status(500).json({ message: 'Server Error' });
         } else {
+          console.log(bookList);
           res.json({ message: 'OK', data: { book_list: bookList } });
         }
       });
@@ -55,20 +56,37 @@ module.exports = {
         if (error) {
           res.status(500).json({ message: 'Server Error' });
         } else {
-          const book_data = {
-            title: reviewList[0].title,
-            thumbnail: reviewList[0].thumbnail,
-          };
-          const temp = {};
-          reviewList.forEach((reviewData) => {
-            const { review_id, page, created_at, review } = reviewData;
-            if (!temp[page]) {
-              temp[page] = { page, reviews: [] };
-            }
-            temp[page].reviews.push({ review_id, created_at, review });
-          });
-          const review_list = Object.values(temp);
-          res.json({ message: 'OK', data: { book_data, review_list } });
+          if (reviewList.length === 0) {
+            book.bookData(book_id, (error, result) => {
+              if (error) throw error;
+              res.json({
+                message: 'ok',
+                data: { book_data: result[0], review_list: [] },
+              });
+            });
+          } else {
+            const book_data = {
+              title: reviewList[0].title,
+              thumbnail: reviewList[0].thumbnail,
+              contents: reviewList[0].contents,
+              book_id: reviewList[0].id,
+              author: reviewList[0].author,
+              isbn: reviewList[0].isbn,
+              published_at: reviewList[0].published_at,
+              publisher: reviewList[0].publisher,
+            };
+            console.log(book_data);
+            const temp = {};
+            reviewList.forEach((reviewData) => {
+              const { review_id, page, created_at, review } = reviewData;
+              if (!temp[page]) {
+                temp[page] = { page, reviews: [] };
+              }
+              temp[page].reviews.push({ review_id, created_at, review });
+            });
+            const review_list = Object.values(temp);
+            res.json({ message: 'OK', data: { book_data, review_list } });
+          }
         }
       });
     }

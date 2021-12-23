@@ -2,7 +2,7 @@ const axios = require('axios');
 const { google } = require('googleapis');
 require('dotenv').config();
 
-const PORT = process.env.PORT || 80;
+const SERVER_PORT = process.env.SERVER_PORT || 80;
 
 const scope = [
   'https://www.googleapis.com/auth/userinfo.profile',
@@ -12,7 +12,7 @@ const scope = [
 const oauth2Client = new google.auth.OAuth2(
   process.env.GOOGLE_CLIENT_ID,
   process.env.GOOGLE_CLIENT_SECRET,
-  `${process.env.DOMAIN}:${PORT}/auth/google/callback`
+  `${process.env.SERVER_DOMAIN}:${SERVER_PORT}/auth/google/callback`
 );
 
 const authURL = oauth2Client.generateAuthUrl({
@@ -22,17 +22,21 @@ const authURL = oauth2Client.generateAuthUrl({
 
 const makeResponse = async (res, data) => {
   const login = await axios.post(
-    `${process.env.DOMAIN}:${PORT}/user/login/social`,
-    data
-  );
+    `${process.env.SERVER_DOMAIN}:${SERVER_PORT}/user/login/social`,
+    { ...data },
+  )
+  //   .catch(err => {
+  //     console.log(err)
+  //   })
+  // console.log(login, data)
   const accessToken = login.headers['set-cookie'][0]
     .split(';')[0]
     .split('=')[1];
   res.cookie('accessToken', accessToken, {
-    domain: 'localhost',
+    // domain: process.env.SERVER_DOMAIN,
     path: '/',
     maxAge: 24 * 60 * 60 * 1000,
-    sameSite: 'none',
+    // sameSite: 'none',
     // secure: true,
     httpOnly: true,
   });
@@ -40,7 +44,7 @@ const makeResponse = async (res, data) => {
     username: login.data.data.username,
   });
   const queryString = resdata.toString();
-  res.redirect(`${process.env.DOMAIN}:3000/login/google?${queryString}`);
+  res.redirect(`${process.env.CLIENT_DOMAIN}:${process.env.CLIENT_PORT}/login/google?${queryString}`);
 };
 
 module.exports = {
@@ -60,7 +64,7 @@ module.exports = {
         social: 'google',
       };
       axios
-        .post(`${process.env.DOMAIN}:${PORT}/user/signup/social`, data)
+        .post(`${process.env.SERVER_DOMAIN}:${SERVER_PORT}/user/signup/social`, data)
         .then((response) => {
           console.log('회원가입 성공');
           makeResponse(res, data);

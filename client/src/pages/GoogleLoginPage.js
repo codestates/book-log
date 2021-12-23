@@ -1,24 +1,36 @@
 import GoogleLogin from '../components/user/GoogleLogin';
 import styled from 'styled-components';
-import LogoImg from '../book-log-logo.png'
+import LogoImg from '../book-log-logo.png';
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+`;
 
 const GoogleLoginContainer = styled.div`
-  width: 500px;
-  height: 500px;
-  margin: auto;
-  padding: 3em;
+  width: 60%;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 3rem;
+  margin-top: 2rem;
   border-radius: 40px;
-  background-color: rgba(255, 255, 255, 0.7);
   font-size: 14px;
   text-align: center;
 `;
 
 export default function GoogleLoginPage(props) {
   const { handleLogin, handleUsername } = props;
+  props.useTitle('북로그 구글 로그인');
   return (
-    <GoogleLoginContainer>
-      <img src={LogoImg} alt="logo" />
-      <GoogleLogin handleLogin={handleLogin} handleUsername={handleUsername} />
-    </GoogleLoginContainer>
+    <Container>
+      <GoogleLoginContainer>
+        <img src={LogoImg} alt="logo" />
+        <GoogleLogin
+          handleLogin={handleLogin}
+          handleUsername={handleUsername}
+        />
+      </GoogleLoginContainer>
+    </Container>
   );
 }

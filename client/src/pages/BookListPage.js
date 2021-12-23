@@ -54,9 +54,20 @@ const BookContainer = styled.div`
   margin-top: 2rem;
   overflow-y: scroll;
   height: 35rem;
+  background-color: rgb(247, 237, 222, 0.9);
+  border-radius: 0.3rem;
 
   &::-webkit-scrollbar {
-    width: 5px;
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    padding: 1px;
   }
 `;
 
@@ -64,10 +75,14 @@ const Cover = styled(BookCover)`
   border-radius: 0.3rem;
 `;
 
-export default function BookListPage({ handleCurrentbook, currentBook, isLogin }) {
-
+export default function BookListPage({
+  handleCurrentbook,
+  currentBook,
+  isLogin,
+  useTitle,
+}) {
   axios.defaults.withCredentials = true;
-
+  useTitle('북로그 도서 목록');
   const [bookList, setBookList] = useState([]); // **
   const [errorMessage, setErrorMessage] = useState(''); // **
   const navigate = useNavigate();
@@ -91,7 +106,6 @@ export default function BookListPage({ handleCurrentbook, currentBook, isLogin }
   useEffect(() => {
     bookListRequest();
   }, []);
-  console.log(bookList);
   return (
     <div>
       {isLogin ? (
@@ -105,12 +119,14 @@ export default function BookListPage({ handleCurrentbook, currentBook, isLogin }
           <BookContainer className="book-list">
             {bookList.length !== 0 ? (
               bookList.map((book) => (
-                <Cover
-                  key={book.book_id}
-                  book={book}
-                  handleCurrentbook={handleCurrentbook}
-                  currentBook={currentBook}
-                />
+                <Link to="/booklist/reviewlist">
+                  <Cover
+                    key={book.book_id}
+                    book={book}
+                    handleCurrentbook={handleCurrentbook}
+                    currentBook={currentBook}
+                  />
+                </Link>
               ))
             ) : (
               <NoBook>저장한 도서가 없습니다. 도서를 추가해주세요.</NoBook>
@@ -121,7 +137,9 @@ export default function BookListPage({ handleCurrentbook, currentBook, isLogin }
       ) : (
         <BeforeLoginModal>
           <div className="beforeLogin">로그인 후 사용해주세요.</div>
-          <button onClick={() => navigate('/')}>로그인 화면으로 이동</button>
+          <button onClick={() => navigate('/')} className="btn">
+            로그인 화면으로 이동
+          </button>
         </BeforeLoginModal>
       )}
     </div>

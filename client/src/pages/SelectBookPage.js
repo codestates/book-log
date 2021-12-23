@@ -41,7 +41,7 @@ const BooksContainer = styled.div`
   width: 100%;
   background-color: rgb(247, 237, 222, 0.9);
   padding: 0.7rem 1rem;
-  height: 35rem;
+  height: 32rem;
   overflow-y: scroll;
   border-radius: 0.3rem;
 
@@ -85,7 +85,9 @@ const ModalBtn = styled.div`
   margin-top: 1rem;
 `;
 
-const ModalInfo = styled.div``;
+const ModalInfo = styled.div`
+  width: 40rem;
+`;
 
 const ModalTitle = styled.div`
   padding-bottom: 1rem;
@@ -96,21 +98,28 @@ const ModalDetail = styled.div``;
 
 const ModalCover = styled.img`
   padding-right: 1rem;
+  width: 10rem;
 `;
 
 const Button = styled.button`
-  margin-right: 1.3rem;
-  width: 7rem;
-  height: 2rem;
+  width: 6rem;
+  margin-right: 4rem;
+  padding: 0.3rem 0.7rem;
+  background-color: #0b3961;
+  border-radius: 0.2rem;
+  text-decoration: none;
+  line-height: 1.5rem;
+  color: white;
+  border: none;
 `;
 
-const SelectBookPage = ({ handleBookInfo, isLogin }) => {
+const SelectBookPage = ({ handleBookInfo, isLogin, useTitle }) => {
   const [bookList, setBookList] = useState([]);
   const [search, setSearch] = useState('');
   const [selectedBook, setSelectedBook] = useState({});
   const [isModal, setIsModal] = useState(false);
   const navigate = useNavigate();
-
+  useTitle('북로그 도서 검색');
   useEffect(() => {
     if (search !== '') {
       searchBook(search);
@@ -160,7 +169,7 @@ const SelectBookPage = ({ handleBookInfo, isLogin }) => {
                     src={
                       selectedBook.thumbnail
                         ? selectedBook.thumbnail
-                        : 'https://user-images.githubusercontent.com/89366567/146297427-157c1ece-12f5-4d33-b198-d296275f7981.png'
+                        : `https://via.placeholder.com/120x174.png?text=Book+Log`
                     }
                   />
                   <ModalInfo>
@@ -210,7 +219,9 @@ const SelectBookPage = ({ handleBookInfo, isLogin }) => {
       ) : (
         <BeforeLoginModal>
           <div className="beforeLogin">로그인 후 사용해주세요.</div>
-          <button onClick={() => navigate('/')}>로그인 화면으로 이동</button>
+          <button onClick={() => navigate('/')} className="btn">
+            로그인 화면으로 이동
+          </button>
         </BeforeLoginModal>
       )}
     </div>
