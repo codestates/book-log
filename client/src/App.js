@@ -98,6 +98,7 @@ function App() {
                 handleUsername={handleUsername}
                 isLogin={isLogin}
                 useTitle={useTitle()}
+                handleLogout={handleLogout}
               />
             }
           ></Route>
@@ -127,6 +128,7 @@ function App() {
                 currentBook={currentBook}
                 isLogin={isLogin}
                 useTitle={useTitle()}
+                bookInfo={bookInfo}
               />
             }
           ></Route>
@@ -148,6 +150,7 @@ function App() {
                 bookInfo={bookInfo}
                 isLogin={isLogin}
                 useTitle={useTitle()}
+                currentBook={currentBook}
               />
             }
           ></Route>

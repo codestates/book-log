@@ -31,20 +31,19 @@ const Content = styled.div`
 `;
 
 const WithdrawalButton = styled.div`
-  padding: .5em;
+  padding: 0.5em;
   border-radius: 10px;
   background-color: rgba(228, 150, 127, 1);
   color: white;
   text-align: center;
   font-weight: 700;
 
-
   &:hover {
     cursor: pointer;
   }
 `;
 
-export default function Withdrawal({ handleUsername }) {
+export default function Withdrawal({ handleUsername, handleLogout }) {
   const [checkPassword, setCheckPassword] = useState({
     password: '',
   });
@@ -66,10 +65,15 @@ export default function Withdrawal({ handleUsername }) {
       })
         .then((result) => {
           if (result.status === 200) {
-            setModal(true);
             // alert('탈퇴 완료하였습니다. Goodbye');
+
             handleUsername('guest');
-            setTimeout(() => navigate('/', { replace: true }), 2000);
+
+            setModal(true);
+            setTimeout(() => {
+              handleLogout();
+              navigate('/', { replace: true });
+            }, 2000);
           }
         })
         .catch((err) => {
