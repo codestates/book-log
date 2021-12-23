@@ -20,8 +20,15 @@ const Pages = styled.div`
   height: 170px;
 `;
 
-const Addreview = styled.div`
-  margin-left: 40px;
+const Addreviewbtn = styled.div`
+  border-radius: 10px;
+  background-color: rgba(41, 74, 105, 1);
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 20px;
 `;
 export default function ReviewTitleList({ reviewList, handleCurrentReviews }) {
   const booksReviews = reviewList.review_list || []; // 배열
@@ -42,11 +49,10 @@ export default function ReviewTitleList({ reviewList, handleCurrentReviews }) {
             : '리뷰를 추가해주세요.'}
         </Pages>
       </Titles>
-      <Addreview>
-        <button className="add-review">
-          <Link to="/reviewinput">작성하기</Link>
-        </button>
-      </Addreview>
+
+      <Link to="/reviewinput">
+        <Addreviewbtn>작성하기</Addreviewbtn>
+      </Link>
     </ReviewtitleList>
   );
 }

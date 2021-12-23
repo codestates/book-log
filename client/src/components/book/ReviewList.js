@@ -3,13 +3,15 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 const CurrentreviewPage = styled.div`
+  background-color: #b0c4de;
   display: flex;
   justify-content: space-between;
-  border: 1px solid black;
+  padding-top: 20px;
+  border: black;
 `;
 
 const ShowreivewContent = styled.div`
-  border: 1px solid black;
+  border: 0.5px solid grey;
   height: 170px;
   display: flex;
   flex-direction: column;
@@ -22,6 +24,8 @@ const Buttons = styled.div`
   padding-bottom: 10px;
   display: flex;
   justify-content: flex-end;
+
+  margin-top: 115px;
 `;
 const Modify = styled.div`
   padding: 0.5em;
@@ -77,15 +81,15 @@ export default function ReviewList({ currentReviews, reviewList }) {
     <div className="current-review">
       <CurrentreviewPage>
         <div> {currentReviews.page} 페이지 </div>
-        <div>
+        <select>
           {currentReviews.reviews.length !== 0
             ? currentReviews.reviews.map((item) => (
-                <div onClick={() => handleSelectDate(item)}>
+                <option onClick={() => handleSelectDate(item)}>
                   {item.created_at}
-                </div>
+                </option>
               ))
             : '리뷰를 추가해주세요.'}
-        </div>
+        </select>
       </CurrentreviewPage>
       <ShowreivewContent>
         <ReviewContent>{selectDate.review}</ReviewContent>
