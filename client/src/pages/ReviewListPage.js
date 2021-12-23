@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Modal from '../components/Modal';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import PageTitle from '../components/PageTitle';
 
 const BeforeLoginModal = styled(Modal)``;
@@ -58,7 +58,7 @@ const Page = styled.div`
 
 const DataContainer = styled.div`
   display: flex;
-  padding 2rem 3rem;
+  padding: 2rem 3rem;
   margin-bottom: 1rem;
 `;
 
@@ -81,6 +81,7 @@ const WriteContainer = styled.div`
 
 const PagesContainer = styled.div`
   overflow-y: scroll;
+  height: 11.3rem;
 
   &::-webkit-scrollbar {
     width: 3px;
@@ -187,27 +188,23 @@ const ReviewListPage = ({
   const [reviewList, setReviewList] = useState([]);
   const [selectedPage, setSelectedPage] = useState('');
   const [nowReview, setNowReview] = useState({});
-  const [bookData, setBookData] = useState({});
+  const [nowBook, setNowBook] = useState({ title: '' });
 
   useTitle('북로그 감상 목록');
-  const {
-    book_id,
-    contents,
-    isbn,
-    published_at,
-    publisher,
-    thumbnail,
-    title,
-    url,
-    author,
-  } = currentBook;
+  const { book_id } = currentBook;
 
+  const { state } = useLocation();
+  console.log(nowBook);
   useEffect(() => {
+    console.log(state);
+    const bookId = state ? state.book_id : book_id;
     axios
-      .get(`${process.env.REACT_APP_SERVER_URL}/book/${book_id}/review`)
+      .get(`${process.env.REACT_APP_SERVER_URL}/book/${bookId}/review`)
       .then((result) => {
         const { book_data, review_list } = result.data.data;
         setReviewList(review_list);
+        console.log(book_data);
+        setNowBook(book_data);
       });
   }, [book_id, selectedPage]);
 
@@ -227,7 +224,7 @@ const ReviewListPage = ({
   const handleWriting = () => {
     navigate('/reviewinput', {
       state: {
-        bookInfo: { ...currentBook, authors: [currentBook.author] },
+        bookInfo: { ...nowBook, authors: [nowBook.author] },
       },
     }); // 작성 페이지로 책 데이터와 함께 이동해야함
   };
@@ -237,7 +234,7 @@ const ReviewListPage = ({
     // 필요한 데이터 => 리뷰 아이디, 리뷰 데이터(페이지, 내용), 책 정보
     navigate('/reviewinput', {
       state: {
-        bookInfo: { ...currentBook, authors: [currentBook.author] },
+        bookInfo: { ...nowBook, authors: [nowBook.author] },
         reviewContent: { page: selectedPage.page, ...nowReview },
       },
     });
@@ -270,14 +267,14 @@ const ReviewListPage = ({
     <>
       {isLogin ? (
         <Container>
-          <PageTitle>'{currentBook.title.slice(0, 20)}' 감상 목록</PageTitle>
+          <PageTitle>'{nowBook.title.slice(0, 20)}' 감상 목록</PageTitle>
           <WriteContainer>
             <WriteBtn onClick={handleWriting}>작성하기</WriteBtn>
           </WriteContainer>
           <ContentContainer>
             <DataContainer>
               <ReviewDataContainer>
-                <Image src={thumbnail} title={title} />
+                <Image src={nowBook.thumbnail} title={nowBook.title} />
               </ReviewDataContainer>
               <PageContainer>
                 <SubTitle>페이지</SubTitle>

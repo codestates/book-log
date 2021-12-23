@@ -71,6 +71,9 @@ module.exports = {
               contents: reviewList[0].contents,
               book_id: reviewList[0].id,
               author: reviewList[0].author,
+              isbn: reviewList[0].isbn,
+              published_at: reviewList[0].published_at,
+              publisher: reviewList[0].publisher,
             };
             console.log(book_data);
             const temp = {};
