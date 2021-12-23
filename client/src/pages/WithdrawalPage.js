@@ -56,7 +56,10 @@ export default function WithdrawalPage(props) {
         <Container>
           <ContentContainer>
             <PageTitle>회원탈퇴</PageTitle>
-            <Withdrawal />
+            <Withdrawal
+              handleUsername={props.handleUsername}
+              handleLogout={props.handleLogout}
+            />
           </ContentContainer>
         </Container>
       ) : (
