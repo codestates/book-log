@@ -27,7 +27,6 @@ const PageInput = styled.div`
   float: right;
 `;
 export default function ReviewInput({ bookInfo, info, bookId }) {
-  console.log(bookId);
   const today = new Date();
 
   const navigate = useNavigate();
@@ -42,8 +41,6 @@ export default function ReviewInput({ bookInfo, info, bookId }) {
   const writeReview = () => {
     let regExp = /[^0-9]/g;
     let number = String(reviewContent.page).replace(regExp, '');
-    console.log(reviewContent.page);
-    console.log(typeof reviewContent.page);
     if (String(reviewContent.page) !== number) {
       setErrorMessage('페이지수는 숫자로만 입력해야합니다.');
     } else if (!reviewContent.page || !reviewContent.content) {

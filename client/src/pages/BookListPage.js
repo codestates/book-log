@@ -106,7 +106,6 @@ export default function BookListPage({
   useEffect(() => {
     bookListRequest();
   }, []);
-  console.log(bookList);
   return (
     <div>
       {isLogin ? (

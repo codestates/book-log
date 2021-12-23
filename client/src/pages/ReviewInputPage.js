@@ -38,16 +38,14 @@ export default function ReviewInputPage({ bookInfo, isLogin, useTitle }) {
   let title = '';
   let thumbnail = '';
   let contents = '';
-  let info = '';
-  let bookId = '';
+  let reviewContent = '';
+  let book_id = '';
   if (!state) {
     ({ title, thumbnail, contents } = bookInfo);
   } else {
-    ({ title, thumbnail, contents } = state.reviewList.book_data);
-    info = state.reviewdata;
-    bookId = state.reviewList.book_data.book_id;
+    ({ title, thumbnail, contents, book_id } = state.bookInfo);
+    reviewContent = state.reviewContent;
   }
-  console.log(state);
   useTitle('북로그 감상입력');
   return (
     <ReviewInputPageContainer>
@@ -69,7 +67,11 @@ export default function ReviewInputPage({ bookInfo, isLogin, useTitle }) {
                   : contents}
               </div>
             </BookInfoContent>
-            <ReviewInput bookId={bookId} info={info} bookInfo={bookInfo} />
+            <ReviewInput
+              bookId={book_id}
+              info={reviewContent}
+              bookInfo={state ? state.bookInfo : bookInfo}
+            />
           </BookInfoContainer>
         </div>
       ) : (

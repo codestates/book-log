@@ -37,6 +37,7 @@ module.exports = {
         if (error) {
           res.status(500).json({ message: 'Server Error' });
         } else {
+          console.log(bookList);
           res.json({ message: 'OK', data: { book_list: bookList } });
         }
       });
@@ -69,7 +70,9 @@ module.exports = {
               thumbnail: reviewList[0].thumbnail,
               contents: reviewList[0].contents,
               book_id: reviewList[0].id,
+              author: reviewList[0].author,
             };
+            console.log(book_data);
             const temp = {};
             reviewList.forEach((reviewData) => {
               const { review_id, page, created_at, review } = reviewData;

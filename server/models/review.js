@@ -120,7 +120,7 @@ module.exports = {
     `;
     db.query(
       updateQuery,
-      [review_content, review_id, page],
+      [review_content, page, review_id],
       (error, result) => {
         if (error) throw error;
         callback(error, result);
@@ -131,9 +131,7 @@ module.exports = {
     const bookIdQuery = `SELECT book_id FROM review WHERE id = ? AND user_id = ?`;
     db.query(bookIdQuery, [reviewId, userId], (error, bookId) => {
       if (error) throw error;
-      console.log(reviewId, bookId);
       const { book_id } = bookId[0];
-      console.log('book_id', book_id);
       const selectQuery = `SELECT book_id, count(book_id) count FROM review WHERE book_id = ? AND user_id = ? GROUP BY book_id`;
       db.query(selectQuery, [book_id, userId], (error, result) => {
         if (error) throw error;
@@ -148,7 +146,7 @@ module.exports = {
             `;
             db.query(queryString, [reviewId], (error, result) => {
               if (error) throw error;
-              callback(error, result);
+              callback(error, { ...result, delete: true });
             });
           });
         } else {
@@ -157,7 +155,7 @@ module.exports = {
           `;
           db.query(queryString, [reviewId], (error, result) => {
             if (error) throw error;
-            callback(error, result);
+            callback(error, { ...result, delete: false });
           });
         }
       });
