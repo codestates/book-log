@@ -64,7 +64,7 @@ module.exports = {
         if (error) {
           res.status(500).json({ message: 'Server Error' });
         }
-        res.json({ message: 'ok' });
+        res.json({ message: 'ok', data: { delete: result.delete } });
       });
     }
   },
