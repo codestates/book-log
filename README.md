@@ -2,7 +2,7 @@
 
 ![](https://user-images.githubusercontent.com/89366567/146297427-157c1ece-12f5-4d33-b198-d296275f7981.png)
 
-## 나만의 독서노트, Book Log
+### 나만의 독서노트, Book Log
 
 - 내가 읽은 책들을 한 눈에 확인할 수 있어요
 - 책에 대한 감상을 페이지 별로 작성할 수 있어요
@@ -14,7 +14,7 @@
   
   
    
-# Tech Stack
+## Tech Stack
 ### Common
 <div>
   <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
@@ -55,7 +55,7 @@
 
 ![booklog](https://user-images.githubusercontent.com/53068706/147174568-d20cd481-109e-4816-8840-077a428beca9.png)
 
-# 팀원
+## 팀원
 
 | 이름         | 역할       |
 | ------------ | ---------- |
@@ -63,4 +63,7 @@
 | [신한결](https://github.com/alskfl222)       | 백엔드     |
 | [박지호](https://github.com/qkrwlgh123)       | 프론트엔드 |
 | [윤보라](https://github.com/boraborayoon)       | 프론트엔드 |
+
+## Project Details
+[Book Log Wiki](https://github.com/codestates/book-log/wiki)
 
