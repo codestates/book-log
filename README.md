@@ -20,7 +20,7 @@
 
 | 이름         | 역할       |
 | ------------ | ---------- |
-| 김도연(팀장) | 백엔드     |
-| 신한결       | 백엔드     |
-| 박지호       | 프론트엔드 |
-| 윤보라       | 프론트엔드 |
+| [김도연](https://github.com/kimdoyeonn)(팀장) | 백엔드     |
+| [신한결](https://github.com/alskfl222)       | 백엔드     |
+| [박지호](https://github.com/qkrwlgh123)       | 프론트엔드 |
+| [윤보라](https://github.com/boraborayoon)       | 프론트엔드 |
